@@ -15,6 +15,9 @@ export function IndustrialBackground() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
         // Material Flow Particles - Enhanced
         class Particle {
             x: number;
@@ -26,7 +29,7 @@ export function IndustrialBackground() {
 
             constructor() {
                 this.x = -20;
-                this.y = Math.random() * canvas.height;
+                this.y = Math.random() * canvasHeight;
                 this.vx = 0.5 + Math.random() * 1.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
 
@@ -46,9 +49,9 @@ export function IndustrialBackground() {
                 this.x += this.vx;
                 this.y += this.vy;
 
-                if (this.x > canvas.width + 20) {
+                if (this.x > canvasWidth + 20) {
                     this.x = -20;
-                    this.y = Math.random() * canvas.height;
+                    this.y = Math.random() * canvasHeight;
                 }
             }
 

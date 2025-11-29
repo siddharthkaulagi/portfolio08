@@ -18,9 +18,9 @@ export function Hero() {
             className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
         >
             {/* Background Overlay */}
-            <div className="absolute inset-0 z-0 dark:block hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-background/80 dark:from-[#020617]/80 via-background/60 dark:via-[#020617]/60 to-background dark:to-[#020617]" />
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20" />
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#020617]/80 dark:via-[#020617]/60 dark:to-[#020617]" />
+                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 dark:opacity-20" />
             </div>
 
             {/* Industrial Themed Background Animations */}

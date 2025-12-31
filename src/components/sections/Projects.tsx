@@ -53,7 +53,7 @@ const projects = [
 
 export function Projects() {
     return (
-        <section id="projects" className="relative py-24 bg-background overflow-hidden">
+        <section id="projects" className="relative py-24 bg-background/90 overflow-hidden">
             {/* Animated Background */}
             <ProjectsBackground />
 

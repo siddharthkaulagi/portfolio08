@@ -42,7 +42,7 @@ const skillCategories = [
 
 export function Skills() {
     return (
-        <section id="skills" className="relative py-24 bg-background">
+        <section id="skills" className="relative py-24 bg-background/90">
             {/* Animated Background */}
             <SkillsBackground />
 

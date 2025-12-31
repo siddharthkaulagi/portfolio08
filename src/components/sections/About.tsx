@@ -38,7 +38,7 @@ const educationData = [
 
 export function About() {
     return (
-        <section id="about" className="relative py-20 bg-background overflow-hidden">
+        <section id="about" className="relative py-20 bg-transparent overflow-hidden">
             {/* Animated Background */}
             <AboutBackground />
 

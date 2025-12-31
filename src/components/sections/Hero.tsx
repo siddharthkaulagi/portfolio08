@@ -17,10 +17,16 @@ export function Hero() {
             id="hero"
             className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
         >
-            {/* Background Overlay */}
+            {/* Background Overlay - Theme Aware */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#020617]/80 dark:via-[#020617]/60 dark:to-[#020617]" />
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-40 dark:opacity-20" />
+                {/* Light Mode Base: Transparent to reveal body dots */}
+                <div className="absolute inset-0 bg-transparent dark:bg-slate-950" />
+
+                {/* Dark Mode Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 opacity-0 dark:opacity-100 transition-opacity duration-500" />
+
+                {/* Grid Overlay */}
+                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 dark:opacity-20" />
             </div>
 
             {/* Industrial Themed Background Animations */}
@@ -44,9 +50,9 @@ export function Hero() {
                     style={{ y: y2 }}
                     className="text-left space-y-6"
                 >
-                    <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/30 backdrop-blur-sm">
-                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                        <span className="text-cyan-300 text-xs font-medium tracking-wider uppercase">
+                    <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-100/50 dark:bg-cyan-950/30 backdrop-blur-sm">
+                        <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse" />
+                        <span className="text-cyan-600 dark:text-cyan-300 text-xs font-medium tracking-wider uppercase">
                             System Online
                         </span>
                     </div>
@@ -77,15 +83,16 @@ export function Hero() {
                         </motion.a>
 
                         <motion.a
-                            href="/resume.pdf"
+                            href="https://drive.google.com/file/d/1hHo5PBhfM7oraSNgaPal4Ik41wiyK9m2/view?usp=drive_link"
+                            target="_blank"
                             download="Siddharth_Kaulagi_Resume.pdf"
                             whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 170, 0, 0.6), 0 0 80px rgba(255, 170, 0, 0.3)" }}
                             whileTap={{ scale: 0.95 }}
                             className="relative px-8 py-4 bg-transparent border-2 border-orange-500/50 text-orange-400 font-bold rounded-lg hover:bg-orange-500/10 hover:border-orange-500 hover:text-orange-300 transition-all flex items-center space-x-2 shadow-[0_0_15px_rgba(255,170,0,0.3)] hover:shadow-[0_0_40px_rgba(255,170,0,0.6)] overflow-hidden group"
                         >
                             <span className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/20 to-orange-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                            <span className="relative">Download Resume</span>
-                            <Download size={20} className="relative" />
+                            <span className="relative">View Resume</span>
+                            {/* <Download size={20} className="relative" /> */}
                         </motion.a>
                     </div>
 
@@ -125,7 +132,7 @@ export function Hero() {
 
                     {/* Image Container */}
                     <div className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] rounded-full p-2 bg-gradient-to-tr from-cyan-500 to-orange-500 shadow-[0_0_50px_rgba(6,182,212,0.4)]">
-                        <div className="w-full h-full rounded-full overflow-hidden relative bg-slate-950 dark:bg-slate-950 border-4 border-background">
+                        <div className="w-full h-full rounded-full overflow-hidden relative bg-slate-200 dark:bg-slate-950 border-4 border-background">
                             <Image
                                 src="/profile.png"
                                 alt="Siddharth R Kaulagi"

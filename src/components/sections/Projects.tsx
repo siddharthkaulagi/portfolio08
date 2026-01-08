@@ -82,9 +82,14 @@ export function Projects() {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.2 }}
-                            whileHover={{ y: -10 }}
-                            className="group relative bg-card dark:bg-slate-900 border border-border dark:border-slate-800 rounded-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500"
+                            transition={{ duration: 0.3, delay: index * 0.1 }}
+                            whileHover={{
+                                y: -10,
+                                scale: 1.02,
+                                boxShadow: "0 0 40px rgba(6,182,212,0.4), 0 0 80px rgba(6,182,212,0.2)",
+                                transition: { duration: 0.15, ease: "easeOut" }
+                            }}
+                            className="group relative bg-card dark:bg-slate-900 border border-border dark:border-slate-800 rounded-2xl overflow-hidden hover:border-cyan-500 transition-all duration-150 cursor-pointer"
                         >
                             {/* Gradient Header */}
                             <div className={`h-2 w-full bg-gradient-to-r ${project.color}`} />

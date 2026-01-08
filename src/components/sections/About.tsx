@@ -15,6 +15,8 @@ const educationData = [
         icon: GraduationCap,
         color: "text-cyan-400",
         borderColor: "border-cyan-500/30",
+        hoverBorder: "hover:border-cyan-500",
+        glowColor: "rgba(6,182,212,0.5)",
     },
     {
         title: "12th Grade (PUC)",
@@ -24,6 +26,8 @@ const educationData = [
         icon: School,
         color: "text-orange-400",
         borderColor: "border-orange-500/30",
+        hoverBorder: "hover:border-orange-500",
+        glowColor: "rgba(249,115,22,0.5)",
     },
     {
         title: "10th Grade",
@@ -33,6 +37,8 @@ const educationData = [
         icon: Award,
         color: "text-blue-400",
         borderColor: "border-blue-500/30",
+        hoverBorder: "hover:border-blue-500",
+        glowColor: "rgba(59,130,246,0.5)",
     },
 ];
 
@@ -100,26 +106,39 @@ export function About() {
                                 initial={{ opacity: 0, x: 30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                                transition={{ duration: 0.3, delay: 0.1 + index * 0.08 }}
                                 whileHover={{
-                                    scale: 1.02,
-                                    rotateX: 5,
-                                    zIndex: 10,
-                                    boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)"
+                                    scale: 1.03,
+                                    y: -5,
+                                    boxShadow: `0 0 40px ${edu.glowColor}, 0 0 80px ${edu.glowColor}`,
+                                    transition: { duration: 0.15, ease: "easeOut" }
                                 }}
                                 className={cn(
-                                    "group relative p-6 bg-card/40 dark:bg-slate-900/40 border rounded-xl backdrop-blur-md transition-all duration-300",
-                                    edu.borderColor
+                                    "group relative p-6 bg-card/40 dark:bg-slate-900/40 border rounded-xl backdrop-blur-md transition-all duration-150 cursor-pointer",
+                                    edu.borderColor,
+                                    edu.hoverBorder
                                 )}
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                                {/* Glowing overlay on hover */}
+                                <div
+                                    className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none"
+                                    style={{
+                                        background: `radial-gradient(circle at center, ${edu.glowColor.replace('0.5', '0.15')} 0%, transparent 70%)`
+                                    }}
+                                />
 
-                                <div className="flex items-start gap-4">
-                                    <div className={cn("p-3 rounded-lg bg-muted dark:bg-slate-950 border border-border dark:border-slate-800", edu.color)}>
+                                <div className="flex items-start gap-4 relative z-10">
+                                    {/* Icon with glow effect */}
+                                    <div className={cn("relative p-3 rounded-lg bg-muted dark:bg-slate-950 border border-border dark:border-slate-800 group-hover:scale-110 transition-transform duration-150", edu.color)}>
                                         <edu.icon size={24} />
+                                        {/* Icon glow */}
+                                        <div
+                                            className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-150 blur-md -z-10"
+                                            style={{ backgroundColor: edu.glowColor }}
+                                        />
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-foreground group-hover:text-cyan-400 transition-colors">
+                                        <h4 className={cn("text-xl font-bold text-foreground transition-colors duration-150", `group-hover:${edu.color}`)}>
                                             {edu.title}
                                         </h4>
                                         <p className="text-muted-foreground font-medium">{edu.institution}</p>

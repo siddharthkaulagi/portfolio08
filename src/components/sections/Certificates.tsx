@@ -13,14 +13,44 @@ const certificates = [
         image: "/certificates/tata-data-visualisation.png",
         description: "Completed practical tasks in Framing the Business Scenario, Choosing the Right Visuals, Creating Effective Visuals, and Communicating Insights and Analysis.",
         tags: ["Data Visualization", "Business Insights", "Communication"],
-        link: "https://drive.google.com/file/d/1zbapiP-Um0fpoRwEfpWtstppRY-qKFgf/view?usp=drive_link", // Placeholder or the actual link if known, user didn't provide.
+        link: "https://drive.google.com/file/d/1zbapiP-Um0fpoRwEfpWtstppRY-qKFgf/view?usp=drive_link",
+        status: "Completed"
+    },
+    {
+        title: "Operations Job Simulation",
+        issuer: "Goldman Sachs",
+        date: "Jan 2026",
+        image: "/certificates/goldman-sachs-operations.png",
+        description: "Completed practical tasks in Foundations of operations and Facilitating ultra-high net worth transactions.",
+        tags: ["Operations", "Finance", "Client Services"],
+        link: "https://drive.google.com/file/d/1w6zlVwB0M-0c1axD_nJDzPf3HgAR-D6u/view?usp=drive_link",
+        status: "Completed"
+    },
+    {
+        title: "Supply Chain Job Simulation",
+        issuer: "GE Aerospace",
+        date: "Jan 2026",
+        image: "/certificates/ge-aerospace-supply-chain.png",
+        description: "Completed practical tasks in Determine critical requirements for a turbofan disassembly fixture and Disposition non-conforming turbine blades.",
+        tags: ["Supply Chain", "Aerospace", "Manufacturing"],
+        link: "https://drive.google.com/file/d/1hLZb5NRx9oMa3Omhv6TCYdxajsVRo617/view?usp=drive_link",
+        status: "Completed"
+    },
+    {
+        title: "SAP S/4HANA Supply Chain for Transportation Management",
+        issuer: "SAP",
+        date: "Jan 2026",
+        image: "/certificates/sap-supply-chain-logistics.png",
+        description: "Validate capabilities of different transportation solutions using knowledge of supported processes, solution architecture, and process flow.",
+        tags: ["SAP", "Transportation", "Logistics"],
+        link: "https://drive.google.com/file/d/1vW4ElA4km79gwgVxTPBS4A2K7b2mxPqS/view?usp=drive_link",
         status: "Completed"
     },
     {
         title: "Deloitte Technology Consulting",
         issuer: "Deloitte",
         date: "In Progress",
-        image: "/placeholder-cert.png", // We might not have an image yet
+        image: "/placeholder-cert.png",
         description: "Currently pursuing certification in technology consulting, focusing on enterprise solutions and digital transformation.",
         tags: ["Consulting", "Technology", "Strategy"],
         link: "#",

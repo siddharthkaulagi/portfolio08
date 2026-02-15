@@ -11,7 +11,7 @@ const educationData = [
         title: "B.E. Industrial Engineering & Management",
         institution: "BMSCE Bangalore",
         year: "Expected 2026",
-        score: "GPA: 8.0",
+        score: "GPA: 8.18",
         icon: GraduationCap,
         color: "text-cyan-400",
         borderColor: "border-cyan-500/30",

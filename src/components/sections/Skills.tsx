@@ -56,6 +56,7 @@ const skillCategories = [
             "SolidWorks",
             "ERP Systems (Academic)",
             "Procurement Systems",
+            "SAP(Basic)",
             "GitHub"
         ],
         color: "text-blue-400",
@@ -84,6 +85,7 @@ const skillCategories = [
         icon: Users,
         skills: [
             "Problem Solving",
+            "Time management",
             "Technical Documentation",
             "Team Leadership",
             "Communication",

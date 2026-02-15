@@ -61,7 +61,7 @@ export function Navbar() {
                     <ThemeToggle />
                     <div className="w-px h-6 bg-slate-800 mx-2" />
                     <a
-                        href="https://github.com/siddharthkaulagi/my-project-files"
+                        href="https://github.com/siddharthkaulagi"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-muted-foreground dark:text-slate-400 hover:text-foreground dark:hover:text-white transition-colors"
@@ -109,7 +109,7 @@ export function Navbar() {
                             ))}
                             <div className="flex space-x-4 pt-4 border-t border-border dark:border-white/10">
                                 <a
-                                    href="https://github.com/siddharthkaulagi/my-project-files"
+                                    href="https://github.com/siddharthkaulagi"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-muted-foreground dark:text-slate-400 hover:text-foreground dark:hover:text-white"

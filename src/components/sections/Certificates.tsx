@@ -45,16 +45,6 @@ const certificates = [
         tags: ["SAP", "Transportation", "Logistics"],
         link: "https://drive.google.com/file/d/1vW4ElA4km79gwgVxTPBS4A2K7b2mxPqS/view?usp=drive_link",
         status: "Completed"
-    },
-    {
-        title: "Deloitte Technology Consulting",
-        issuer: "Deloitte",
-        date: "In Progress",
-        image: "/placeholder-cert.png",
-        description: "Currently pursuing certification in technology consulting, focusing on enterprise solutions and digital transformation.",
-        tags: ["Consulting", "Technology", "Strategy"],
-        link: "#",
-        status: "In Progress"
     }
 ];
 
@@ -169,27 +159,6 @@ export function Certificates() {
                         </motion.div>
                     ))}
 
-                    {/* Empty Slot / Call to Action */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: 0.3 }}
-                        whileHover={{
-                            scale: 1.02,
-                            boxShadow: "0 0 30px rgba(6,182,212,0.2)",
-                            transition: { duration: 0.15, ease: "easeOut" }
-                        }}
-                        className="group relative bg-card/50 dark:bg-slate-900/30 border border-dashed border-border dark:border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-cyan-500 transition-all duration-150 min-h-[400px] cursor-pointer"
-                    >
-                        <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mb-4 group-hover:bg-cyan-500/10 group-hover:scale-110 transition-all duration-150">
-                            <Award size={32} className="text-muted-foreground group-hover:text-cyan-500 transition-colors duration-150" />
-                        </div>
-                        <h3 className="text-lg font-bold text-foreground mb-2">More Coming Soon</h3>
-                        <p className="text-muted-foreground text-sm max-w-xs">
-                            Constantly expanding my skillset with new technologies and methodologies.
-                        </p>
-                    </motion.div>
                 </div>
             </div>
         </section>

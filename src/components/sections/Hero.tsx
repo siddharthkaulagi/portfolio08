@@ -83,7 +83,7 @@ export function Hero() {
                         </motion.a>
 
                         <motion.a
-                            href="https://drive.google.com/file/d/1hHo5PBhfM7oraSNgaPal4Ik41wiyK9m2/view?usp=drive_link"
+                            href="https://drive.google.com/file/d/1jKpnEIdAYrGMqluaxZV_2147DwmCN888/view?usp=drive_link"
                             target="_blank"
                             download="Siddharth_Kaulagi_Resume.pdf"
                             whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 170, 0, 0.6), 0 0 80px rgba(255, 170, 0, 0.3)" }}

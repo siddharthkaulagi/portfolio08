@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Github, ExternalLink, Cpu, Box, Activity } from "lucide-react";
+import { Github, ExternalLink, Cpu, Box, Activity, BarChart3 } from "lucide-react";
 import Image from "next/image";
 import { ProjectsBackground } from "@/components/ProjectsBackground";
 
@@ -13,7 +13,8 @@ const projects = [
         tags: ["Python", "Streamlit", "ML (Prophet/XGBoost)", "GIS", "Google Gemini"],
         icon: Activity,
         color: "from-cyan-500 to-blue-600",
-        link: "https://github.com/siddharthkaulagi/my-project-files",
+        link: "https://github.com/siddharthkaulagi/Unified-Retail-Intelligence-Platform-URIP-",
+        image: "/projects/urip-dashboard.png",
         details: [
             "ML Demand Forecasting (Prophet, ARIMA, LSTM)",
             "GIS Store Mapping & Layout Optimization (ARC)",
@@ -28,6 +29,7 @@ const projects = [
         icon: Cpu,
         color: "from-orange-500 to-amber-600",
         link: "https://github.com/siddharthkaulagi/my-project-files",
+        image: "/projects/iot-solar-tracker.jpg",
         details: [
             "Dual-axis tracking algorithm",
             "Real-time IoT Dashboard",
@@ -42,11 +44,27 @@ const projects = [
         icon: Box,
         color: "from-purple-500 to-pink-600",
         link: "https://github.com/siddharthkaulagi/my-project-files",
+        image: "/projects/3d-knuckle-joint.png",
         details: [
             "CAD Design in SolidWorks",
             "Tolerance Analysis & Assembly",
             "PLA Material Testing",
             "Additive Manufacturing Process",
+        ],
+    },
+    {
+        title: "Inventory & Supply Chain Management Analysis",
+        description: "A Power BI–based analysis of inventory and supply chain performance, focusing on operational efficiency, inventory health, and warehouse utilization through interactive dashboards.",
+        tags: ["Power BI", "DAX", "CSV Dataset", "Data Analytics"],
+        icon: BarChart3,
+        color: "from-emerald-500 to-green-600",
+        link: "https://github.com/siddharthkaulagi/Inventory-and-supply-chain-Management-Analysis",
+        image: "/projects/inventory-supply-chain.png",
+        details: [
+            "Warehouse Utilization & Capacity Planning",
+            "Inventory Turnover Ratio & DSI Analysis",
+            "Transportation Cost by Region & Category",
+            "Backorder Tracking & Lead Time Optimization",
         ],
     },
 ];
@@ -75,7 +93,7 @@ export function Projects() {
                     </p>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 gap-8">
                     {projects.map((project, index) => (
                         <motion.div
                             key={index}
@@ -89,12 +107,26 @@ export function Projects() {
                                 boxShadow: "0 0 40px rgba(6,182,212,0.4), 0 0 80px rgba(6,182,212,0.2)",
                                 transition: { duration: 0.15, ease: "easeOut" }
                             }}
-                            className="group relative bg-card dark:bg-slate-900 border border-border dark:border-slate-800 rounded-2xl overflow-hidden hover:border-cyan-500 transition-all duration-150 cursor-pointer"
+                            className="group relative bg-card dark:bg-slate-900 border border-border dark:border-slate-800 rounded-2xl overflow-hidden hover:border-cyan-500 transition-all duration-150 cursor-pointer flex flex-col"
                         >
-                            {/* Gradient Header */}
-                            <div className={`h-2 w-full bg-gradient-to-r ${project.color}`} />
+                            {/* Image Header (if project has an image) */}
+                            {project.image ? (
+                                <div className="relative h-48 w-full overflow-hidden">
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-card dark:from-slate-900 to-transparent opacity-70" />
+                                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${project.color}`} />
+                                </div>
+                            ) : (
+                                /* Gradient Header */
+                                <div className={`h-2 w-full bg-gradient-to-r ${project.color}`} />
+                            )}
 
-                            <div className="p-8">
+                            <div className="p-8 flex flex-col flex-grow">
                                 <div className="flex justify-between items-start mb-6">
                                     <div className={`p-3 rounded-xl bg-muted dark:bg-slate-950 border border-border dark:border-slate-800 group-hover:border-white/20 transition-colors`}>
                                         <project.icon className="text-foreground" size={28} />
@@ -109,7 +141,7 @@ export function Projects() {
                                     </a>
                                 </div>
 
-                                <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-cyan-400 transition-colors">
+                                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-cyan-400 transition-colors">
                                     {project.title}
                                 </h3>
 
@@ -120,7 +152,7 @@ export function Projects() {
                                 <ul className="space-y-2 mb-6">
                                     {project.details.map((detail, idx) => (
                                         <li key={idx} className="flex items-center text-xs text-foreground/80 dark:text-slate-300">
-                                            <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${project.color} mr-2`} />
+                                            <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${project.color} mr-2 flex-shrink-0`} />
                                             {detail}
                                         </li>
                                     ))}

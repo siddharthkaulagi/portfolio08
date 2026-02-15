@@ -312,3 +312,42 @@ h6 {
     opacity: 0.6;
   }
 }
+
+/* Gear Animations */
+.gear-spin {
+  animation: gear-rotate 20s linear infinite;
+}
+
+.gear-spin-reverse {
+  animation: gear-rotate 15s linear infinite reverse;
+}
+
+@keyframes gear-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Conveyor belt stripe motion */
+.belt-stripe {
+  background: repeating-linear-gradient(90deg,
+      transparent,
+      transparent 8px,
+      rgba(148, 163, 184, 0.4) 8px,
+      rgba(148, 163, 184, 0.4) 10px);
+  animation: belt-scroll 0.8s linear infinite;
+}
+
+@keyframes belt-scroll {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 18px 0;
+  }
+}

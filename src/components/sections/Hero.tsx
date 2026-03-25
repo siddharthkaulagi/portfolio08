@@ -1,21 +1,19 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Github, Linkedin, ArrowRight } from "lucide-react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useSpring, useTransform, useScroll } from "framer-motion";
+import { Github, Linkedin, ArrowRight, Hexagon } from "lucide-react";
 import Image from "next/image";
 import { IndustrialBackground } from "@/components/IndustrialBackground";
 
 export function Hero() {
-    const nameRef = useRef<HTMLSpanElement>(null);
+    const githubX = useSpring(0, { damping: 12, stiffness: 150 });
+    const githubY = useSpring(0, { damping: 12, stiffness: 150 });
+    const linkedinX = useSpring(0, { damping: 12, stiffness: 150 });
+    const linkedinY = useSpring(0, { damping: 12, stiffness: 150 });
+    
     const githubRef = useRef<HTMLAnchorElement>(null);
     const linkedinRef = useRef<HTMLAnchorElement>(null);
-
-    // Magnetic physics for social icons
-    const githubX = useSpring(0, { damping: 10, stiffness: 100 });
-    const githubY = useSpring(0, { damping: 10, stiffness: 100 });
-    const linkedinX = useSpring(0, { damping: 10, stiffness: 100 });
-    const linkedinY = useSpring(0, { damping: 10, stiffness: 100 });
 
     function handleMagnetic(e: React.MouseEvent, springX: any, springY: any, ref: any) {
         if (!ref.current) return;
@@ -53,16 +51,16 @@ export function Hero() {
                     className="lg:col-span-7 z-10 space-y-8"
                 >
                     <div className="flex flex-col gap-4">
-                        <label className="font-label text-[11px] uppercase tracking-[0.4em] font-black text-cyan-600 dark:text-[#ffb59c] flex items-center gap-3">
-                            <span className="w-12 h-px bg-cyan-600 dark:bg-[#ffb59c]" />
+                        <label className="font-label text-[11px] uppercase tracking-[0.4em] font-black text-cyan-600 dark:text-[#ff4d00] flex items-center gap-3">
+                            <span className="w-12 h-px bg-cyan-600 dark:bg-[#ff4d00]" />
                             System_Identity_Active
                         </label>
                         <h1 className="font-headline text-6xl sm:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.85] text-foreground dark:text-[#e5e2e1]">
                             I'm <span className="group relative inline-block">
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-500 to-purple-500 dark:from-[#ffb59c] dark:to-[#ff5f1f] group-hover:tracking-widest transition-all duration-700 cursor-default">SIDDHARTH</span>
-                                <span className="absolute -bottom-2 left-0 w-0 h-2 bg-orange-500 dark:bg-[#ff5f1f] group-hover:w-full transition-all duration-500" />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-500 to-purple-500 dark:from-[#ff4d00] dark:to-[#ff8c00] group-hover:tracking-widest transition-all duration-700 cursor-default">SIDDHARTH</span>
+                                <span className="absolute -bottom-2 left-0 w-0 h-2 bg-orange-500 dark:bg-[#ff4d00] group-hover:w-full transition-all duration-500" />
                             </span><br />
-                            <span className="opacity-90">Industrial Engineer<span className="text-cyan-600 dark:text-[#ffb59c]">.</span></span>
+                            <span className="opacity-90">Industrial Engineer<span className="text-cyan-600 dark:text-[#ff4d00]">.</span></span>
                         </h1>
                     </div>
 
@@ -75,16 +73,16 @@ export function Hero() {
                             href="#projects" 
                             whileHover={{ scale: 1.05, x: 10 }}
                             whileTap={{ scale: 0.95 }}
-                            className="group relative px-10 py-5 rounded-2xl bg-black dark:bg-[#ffb59c] text-white dark:text-[#5c1900] font-headline font-black text-lg overflow-hidden flex items-center gap-3"
+                            className="group relative px-10 py-5 rounded-2xl bg-black dark:bg-gradient-to-r dark:from-[#ff4d00] dark:to-[#ff8c00] text-white font-headline font-black text-lg overflow-hidden flex items-center gap-3 shadow-[0_20px_40px_rgba(255,77,0,0.2)]"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                            View Logs
+                            View Projects
                             <ArrowRight className="group-hover:translate-x-2 transition-transform" />
                         </motion.a>
                         
-                        <a href="https://drive.google.com/file/d/1y24AaEUOh5mpXISe99io-O-3wn7HST4F/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ffb59c] font-headline font-black text-xl">
+                        <a href="https://drive.google.com/file/d/1y24AaEUOh5mpXISe99io-O-3wn7HST4F/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ff4d00] font-headline font-black text-xl">
                             <span className="tracking-tight">Get_Resume</span>
-                            <div className="w-0 h-1 bg-cyan-700 dark:bg-[#ffb59c] group-hover:w-full transition-all duration-500" />
+                            <div className="w-0 h-1 bg-cyan-700 dark:bg-[#ff4d00] group-hover:w-full transition-all duration-500" />
                         </a>
                     </div>
                     
@@ -97,7 +95,7 @@ export function Hero() {
                             href="https://github.com/siddharthkaulagi" 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ffb59c] hover:border-cyan-500/20 dark:hover:border-[#ff5f1f]/20 transition-all duration-300 shadow-xl"
+                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ff4d00] hover:border-cyan-500/20 dark:hover:border-[#ff4d00]/20 transition-all duration-300 shadow-xl"
                         >
                             <Github size={24} />
                         </motion.a>
@@ -109,7 +107,7 @@ export function Hero() {
                             href="https://www.linkedin.com/in/siddharth-kaulagi-041ba4220/" 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ffb59c] hover:border-cyan-500/20 dark:hover:border-[#ff5f1f]/20 transition-all duration-300 shadow-xl"
+                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ff4d00] hover:border-cyan-500/20 dark:hover:border-[#ff4d00]/20 transition-all duration-300 shadow-xl"
                         >
                             <Linkedin size={24} />
                         </motion.a>
@@ -126,12 +124,12 @@ export function Hero() {
                     </div>
 
                     {/* Industrial Tag Overlay */}
-                    <div className="absolute -bottom-8 -left-8 bg-white dark:bg-[#ffb59c] p-8 rounded-[36px] shadow-2xl border border-black/5 dark:border-transparent transform group-hover:-translate-y-4 group-hover:rotate-[-4deg] transition-all duration-700">
+                    <div className="absolute -bottom-8 -left-8 bg-white dark:bg-gradient-to-br dark:from-[#ff4d00] dark:to-[#ff8c00] p-8 rounded-[36px] shadow-2xl border border-black/5 dark:border-transparent transform group-hover:-translate-y-4 group-hover:rotate-[-4deg] transition-all duration-700">
                         <div className="flex items-center gap-3 mb-2">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                            <span className="font-label text-[9px] uppercase tracking-[0.3em] text-emerald-500/80 dark:text-emerald-400/80 font-medium whitespace-nowrap drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]">Status: Active</span>
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
+                            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-emerald-500/80 dark:text-white font-black whitespace-nowrap drop-shadow-[0_0_10px_rgba(52,211,153,0.6)]">Status: Active</span>
                         </div>
-                        <div className="font-headline font-medium text-base text-emerald-600 dark:text-emerald-400 uppercase tracking-widest drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]">Open for Opportunities</div>
+                        <div className="font-headline font-black text-lg text-emerald-600 dark:text-emerald-300 uppercase tracking-widest drop-shadow-[0_0_20px_rgba(52,211,153,1)]">Open for Opportunities</div>
                     </div>
                 </motion.div>
             </div>

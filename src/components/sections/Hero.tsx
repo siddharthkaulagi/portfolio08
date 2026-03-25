@@ -1,148 +1,140 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin } from "lucide-react";
+import React, { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Github, Linkedin, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { IndustrialBackground } from "@/components/IndustrialBackground";
 
 export function Hero() {
-    const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 500], [0, 150]);
-    const y2 = useTransform(scrollY, [0, 500], [0, 75]);
-    const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+    const nameRef = useRef<HTMLSpanElement>(null);
+    const githubRef = useRef<HTMLAnchorElement>(null);
+    const linkedinRef = useRef<HTMLAnchorElement>(null);
+
+    // Magnetic physics for social icons
+    const githubX = useSpring(0, { damping: 10, stiffness: 100 });
+    const githubY = useSpring(0, { damping: 10, stiffness: 100 });
+    const linkedinX = useSpring(0, { damping: 10, stiffness: 100 });
+    const linkedinY = useSpring(0, { damping: 10, stiffness: 100 });
+
+    function handleMagnetic(e: React.MouseEvent, springX: any, springY: any, ref: any) {
+        if (!ref.current) return;
+        const { clientX, clientY } = e;
+        const { left, top, width, height } = ref.current.getBoundingClientRect();
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+        springX.set((clientX - centerX) * 0.5);
+        springY.set((clientY - centerY) * 0.5);
+    }
+
+    function resetMagnetic(springX: any, springY: any) {
+        springX.set(0);
+        springY.set(0);
+    }
 
     return (
         <section
             id="hero"
-            className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+            className="relative min-h-screen flex flex-col justify-center px-6 md:px-20 pt-24 pb-12 overflow-hidden bg-[#fafafa] dark:bg-[#131212]"
         >
-            {/* Background Overlay - Theme Aware */}
-            <div className="absolute inset-0 z-0">
-                {/* Light Mode Base: Transparent to reveal body dots */}
-                <div className="absolute inset-0 bg-transparent dark:bg-slate-950" />
-
-                {/* Dark Mode Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-transparent dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 opacity-0 dark:opacity-100 transition-opacity duration-500" />
-
-                {/* Grid Overlay */}
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 dark:opacity-20" />
+            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 dark:opacity-5 pointer-events-none -z-20" />
+            
+            <div className="absolute inset-0 z-0 dark:hidden pointer-events-none">
+                <IndustrialBackground />
             </div>
 
-            {/* Industrial Themed Background Animations */}
-            <IndustrialBackground />
+            {/* Cinematic Background Glows */}
+            <div className="hidden dark:block absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] -z-10 animate-pulse pointer-events-none" />
+            <div className="hidden dark:block absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-orange-600/5 rounded-full blur-[140px] -z-10 animate-pulse pointer-events-none" />
 
-            {/* Floating Particles with Parallax */}
-            <motion.div style={{ y: y1 }} className="absolute inset-0 z-0 pointer-events-none">
-                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400 rounded-full animate-pulse blur-[2px] shadow-[0_0_10px_rgba(0,240,255,0.8)]" />
-                <div className="absolute top-3/4 right-1/3 w-3 h-3 bg-orange-500 rounded-full animate-pulse blur-[3px] delay-700 shadow-[0_0_15px_rgba(255,170,0,0.8)]" />
-                <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-white rounded-full animate-ping delay-1000" />
-                <div className="absolute top-1/3 right-1/2 w-2 h-2 bg-blue-400 rounded-full animate-pulse blur-[2px] shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
-                <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-cyan-300 rounded-full animate-pulse blur-[2px] shadow-[0_0_10px_rgba(103,232,249,0.8)]" />
-            </motion.div>
-
-            <motion.div style={{ opacity }} className="container mx-auto px-6 z-10 grid lg:grid-cols-2 gap-12 items-center">
-                {/* Text Content */}
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    style={{ y: y2 }}
-                    className="text-left space-y-6"
+            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center relative z-10 w-full mt-10">
+                <motion.div 
+                    initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}
+                    className="lg:col-span-7 z-10 space-y-8"
                 >
-                    <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-100/50 dark:bg-cyan-950/30 backdrop-blur-sm">
-                        <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse" />
-                        <span className="text-cyan-600 dark:text-cyan-300 text-xs font-medium tracking-wider uppercase">
-                            System Online
-                        </span>
+                    <div className="flex flex-col gap-4">
+                        <label className="font-label text-[11px] uppercase tracking-[0.4em] font-black text-cyan-600 dark:text-[#ffb59c] flex items-center gap-3">
+                            <span className="w-12 h-px bg-cyan-600 dark:bg-[#ffb59c]" />
+                            System_Identity_Active
+                        </label>
+                        <h1 className="font-headline text-6xl sm:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.85] text-foreground dark:text-[#e5e2e1]">
+                            I'm <span className="group relative inline-block">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-500 to-purple-500 dark:from-[#ffb59c] dark:to-[#ff5f1f] group-hover:tracking-widest transition-all duration-700 cursor-default">SIDDHARTH</span>
+                                <span className="absolute -bottom-2 left-0 w-0 h-2 bg-orange-500 dark:bg-[#ff5f1f] group-hover:w-full transition-all duration-500" />
+                            </span><br />
+                            <span className="opacity-90">Industrial Engineer<span className="text-cyan-600 dark:text-[#ffb59c]">.</span></span>
+                        </h1>
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-tight">
-                        SIDDHARTH KAULAGI
-                    </h1>
-
-                    <h2 className="text-xl md:text-2xl font-bold text-muted-foreground tracking-wide">
-                        INDUSTRIAL ENGINEER •
-                    </h2>
-
-                    <p className="text-muted-foreground text-lg max-w-xl leading-relaxed">
-                        Building intelligent systems for forecasting,Facility layout planning , and data-driven decision making.
-                        Merging <span className="text-cyan-400">digital twins</span> with <span className="text-orange-500">operational excellence</span>.
+                    <p className="font-body text-xl md:text-2xl text-muted-foreground dark:text-[#e5e2e1]/70 max-w-2xl leading-relaxed">
+                        Optimizing complex systems through <span className="text-foreground dark:text-white font-bold">industrial intelligence</span> and <span className="text-foreground dark:text-white font-bold">data-driven orchestration</span>. Building the future of autonomous retail and supply chain.
                     </p>
 
-                    <div className="flex flex-wrap gap-4 pt-4">
-                        <motion.a
-                            href="#projects"
-                            whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(0, 240, 255, 0.6), 0 0 80px rgba(0, 240, 255, 0.3)" }}
+                    <div className="flex flex-wrap items-center gap-10 pt-4">
+                        <motion.a 
+                            href="#projects" 
+                            whileHover={{ scale: 1.05, x: 10 }}
                             whileTap={{ scale: 0.95 }}
-                            className="relative px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-lg shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.6)] transition-all flex items-center space-x-2 border border-cyan-400/50 overflow-hidden group"
+                            className="group relative px-10 py-5 rounded-2xl bg-black dark:bg-[#ffb59c] text-white dark:text-[#5c1900] font-headline font-black text-lg overflow-hidden flex items-center gap-3"
                         >
-                            <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                            <span className="relative">View Projects</span>
-                            <ArrowRight size={20} className="relative" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                            View Logs
+                            <ArrowRight className="group-hover:translate-x-2 transition-transform" />
                         </motion.a>
-
-                        <motion.a
-                            href="https://drive.google.com/file/d/1y24AaEUOh5mpXISe99io-O-3wn7HST4F/view?usp=sharing"
-                            target="_blank"
-                            download="Siddharth_Kaulagi_Resume.pdf"
-                            whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 170, 0, 0.6), 0 0 80px rgba(255, 170, 0, 0.3)" }}
-                            whileTap={{ scale: 0.95 }}
-                            className="relative px-8 py-4 bg-transparent border-2 border-orange-500/50 text-orange-400 font-bold rounded-lg hover:bg-orange-500/10 hover:border-orange-500 hover:text-orange-300 transition-all flex items-center space-x-2 shadow-[0_0_15px_rgba(255,170,0,0.3)] hover:shadow-[0_0_40px_rgba(255,170,0,0.6)] overflow-hidden group"
-                        >
-                            <span className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/20 to-orange-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                            <span className="relative">View Resume</span>
-                            {/* <Download size={20} className="relative" /> */}
-                        </motion.a>
+                        
+                        <a href="https://drive.google.com/file/d/1y24AaEUOh5mpXISe99io-O-3wn7HST4F/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ffb59c] font-headline font-black text-xl">
+                            <span className="tracking-tight">Get_Resume</span>
+                            <div className="w-0 h-1 bg-cyan-700 dark:bg-[#ffb59c] group-hover:w-full transition-all duration-500" />
+                        </a>
                     </div>
-
-                    <div className="flex items-center space-x-6 pt-6">
-                        <a
-                            href="https://github.com/siddharthkaulagi/my-project-files"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-foreground transition-colors"
+                    
+                    <div className="flex items-center space-x-6 pt-12">
+                        <motion.a 
+                            ref={githubRef}
+                            onMouseMove={(e) => handleMagnetic(e, githubX, githubY, githubRef)}
+                            onMouseLeave={() => resetMagnetic(githubX, githubY)}
+                            style={{ x: githubX, y: githubY }}
+                            href="https://github.com/siddharthkaulagi" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ffb59c] hover:border-cyan-500/20 dark:hover:border-[#ff5f1f]/20 transition-all duration-300 shadow-xl"
                         >
                             <Github size={24} />
-                        </a>
-                        <a
-                            href="https://www.linkedin.com/in/siddharth-kaulagi-041ba4220/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-blue-400 transition-colors"
+                        </motion.a>
+                        <motion.a 
+                            ref={linkedinRef}
+                            onMouseMove={(e) => handleMagnetic(e, linkedinX, linkedinY, linkedinRef)}
+                            onMouseLeave={() => resetMagnetic(linkedinX, linkedinY)}
+                            style={{ x: linkedinX, y: linkedinY }}
+                            href="https://www.linkedin.com/in/siddharth-kaulagi-041ba4220/" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ffb59c] hover:border-cyan-500/20 dark:hover:border-[#ff5f1f]/20 transition-all duration-300 shadow-xl"
                         >
                             <Linkedin size={24} />
-                        </a>
+                        </motion.a>
                     </div>
                 </motion.div>
 
-                {/* Profile Image / Visual */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative flex justify-center items-center"
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.2 }}
+                    className="lg:col-span-5 relative group mt-10 lg:mt-0"
                 >
-                    {/* Rotating Rings */}
-                    <div className="absolute w-[350px] h-[350px] md:w-[500px] md:h-[500px] border border-cyan-500/20 rounded-full animate-[spin_10s_linear_infinite]" />
-                    <div className="absolute w-[300px] h-[300px] md:w-[450px] md:h-[450px] border border-orange-500/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+                    <div className="relative w-full max-w-lg mx-auto aspect-[4/5] rounded-[60px] overflow-hidden border-[12px] border-white dark:border-[#1c1b1b] shadow-[0_80px_100px_rgba(0,0,0,0.1)] dark:shadow-none group-hover:rotate-2 transition-transform duration-1000">
+                        <Image alt="Siddharth Kaulagi" src="/profile.png" fill className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[3000ms]" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    </div>
 
-                    {/* Glowing Background behind image */}
-                    <div className="absolute w-[280px] h-[280px] md:w-[380px] md:h-[380px] bg-gradient-to-tr from-cyan-500/20 to-orange-500/20 rounded-full blur-3xl animate-pulse" />
-
-                    {/* Image Container */}
-                    <div className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] rounded-full p-2 bg-gradient-to-tr from-cyan-500 to-orange-500 shadow-[0_0_50px_rgba(6,182,212,0.4)]">
-                        <div className="w-full h-full rounded-full overflow-hidden relative bg-slate-200 dark:bg-slate-950 border-4 border-background">
-                            <Image
-                                src="/profile.png"
-                                alt="Siddharth R Kaulagi"
-                                fill
-                                className="object-cover hover:scale-110 transition-transform duration-700"
-                            />
+                    {/* Industrial Tag Overlay */}
+                    <div className="absolute -bottom-8 -left-8 bg-white dark:bg-[#ffb59c] p-8 rounded-[36px] shadow-2xl border border-black/5 dark:border-transparent transform group-hover:-translate-y-4 group-hover:rotate-[-4deg] transition-all duration-700">
+                        <div className="flex items-center gap-3 mb-2">
+                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                            <span className="font-label text-[9px] uppercase tracking-[0.3em] text-emerald-500/80 dark:text-emerald-400/80 font-medium whitespace-nowrap drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]">Status: Active</span>
                         </div>
+                        <div className="font-headline font-medium text-base text-emerald-600 dark:text-emerald-400 uppercase tracking-widest drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]">Open for Opportunities</div>
                     </div>
                 </motion.div>
-            </motion.div>
+            </div>
         </section>
     );
 }

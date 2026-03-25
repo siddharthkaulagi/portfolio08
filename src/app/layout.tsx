@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description: "Portfolio of Siddharth R Kaulagi - Industrial Engineering",
 };
 
+import { MouseEffect } from "@/components/MouseEffect";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,6 +36,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <MouseEffect />
           {children}
         </ThemeProvider>
       </body>

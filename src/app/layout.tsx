@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Portfolio of Siddharth R Kaulagi - Industrial Engineering",
 };
 
-import { MouseEffect } from "@/components/MouseEffect";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
 export default function RootLayout({
   children,
@@ -36,7 +36,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <MouseEffect />
+          <SmoothScroll />
+          {/* Grainy Texture Overlay */}
+          <div className="fixed inset-0 pointer-events-none z-[99999] opacity-[0.03] dark:opacity-[0.05] contrast-150 grayscale" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
           {children}
         </ThemeProvider>
       </body>

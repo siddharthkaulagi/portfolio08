@@ -105,7 +105,7 @@ function DecryptText({ text, isHovered }: { text: string, isHovered: boolean }) 
             );
 
             if (iteration >= text.length) clearInterval(interval);
-            iteration += 1 / 3;
+            iteration += 1 / 2;
         }, 30);
 
         return () => clearInterval(interval);
@@ -119,8 +119,8 @@ function InteractiveCard({ category, index }: { category: any, index: number }) 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const rotateX = useSpring(useTransform(mouseY, [-200, 200], [10, -10]), { damping: 20, stiffness: 200 });
-    const rotateY = useSpring(useTransform(mouseX, [-200, 200], [-10, 10]), { damping: 20, stiffness: 200 });
+    const rotateX = useSpring(useTransform(mouseY, [-200, 200], [3.5, -3.5]), { damping: 25, stiffness: 150 });
+    const rotateY = useSpring(useTransform(mouseX, [-200, 200], [-3.5, 3.5]), { damping: 25, stiffness: 150 });
 
     function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
         if (!cardRef.current) return;
@@ -160,8 +160,8 @@ function InteractiveCard({ category, index }: { category: any, index: number }) 
                     }}
                 />
 
-                <div className="flex items-center gap-6 mb-8 relative z-10" style={{ transform: "translateZ(60px)" }}>
-                    <div className="p-5 rounded-3xl bg-slate-50 dark:bg-[#201f1f] border border-black/5 dark:border-white/5 shadow-inner group-hover:rotate-[10deg] transition-transform duration-500">
+                <div className="flex items-center gap-6 mb-8 relative z-10" style={{ transform: "translateZ(30px)" }}>
+                    <div className="p-5 rounded-3xl bg-slate-50 dark:bg-[#201f1f] border border-black/5 dark:border-white/5 shadow-inner group-hover:rotate-[5deg] transition-transform duration-500">
                         <category.icon className={category.iconColor} size={32} strokeWidth={1.5} />
                     </div>
                     <div className="flex flex-col">
@@ -174,11 +174,11 @@ function InteractiveCard({ category, index }: { category: any, index: number }) 
                     </div>
                 </div>
 
-                <p className="font-body text-muted-foreground dark:text-[#e5e2e1]/60 text-lg mb-10 leading-relaxed font-medium relative z-10" style={{ transform: "translateZ(30px)" }}>
+                <p className="font-body text-muted-foreground dark:text-[#e5e2e1]/60 text-lg mb-10 leading-relaxed font-medium relative z-10" style={{ transform: "translateZ(15px)" }}>
                     {category.description}
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto relative z-10" style={{ transform: "translateZ(40px)" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto relative z-10" style={{ transform: "translateZ(20px)" }}>
                     {category.skills.map((skill: any, idx: number) => {
                         const [isSkillHovered, setIsSkillHovered] = useState(false);
                         return (

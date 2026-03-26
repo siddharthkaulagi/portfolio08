@@ -1,19 +1,33 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useSpring, useTransform, useScroll } from "framer-motion";
-import { Github, Linkedin, ArrowRight, Hexagon } from "lucide-react";
+import { motion, useSpring, useTransform, useScroll, AnimatePresence } from "framer-motion";
+import { Github, Linkedin, ArrowRight, Hexagon, Terminal as TerminalIcon, X, Quote } from "lucide-react";
 import Image from "next/image";
 import { IndustrialBackground } from "@/components/IndustrialBackground";
+import { Terminal, ONE_PIECE_QUOTES } from "@/components/Terminal";
 
 export function Hero() {
+    const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+    const [isWisdomOpen, setIsWisdomOpen] = useState(false);
+    const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
     const githubX = useSpring(0, { damping: 12, stiffness: 150 });
     const githubY = useSpring(0, { damping: 12, stiffness: 150 });
     const linkedinX = useSpring(0, { damping: 12, stiffness: 150 });
     const linkedinY = useSpring(0, { damping: 12, stiffness: 150 });
-    
+
     const githubRef = useRef<HTMLAnchorElement>(null);
     const linkedinRef = useRef<HTMLAnchorElement>(null);
+
+    // Auto-close Wisdom Modal after 10 seconds
+    useEffect(() => {
+        if (isWisdomOpen) {
+            const timer = setTimeout(() => {
+                setIsWisdomOpen(false);
+            }, 10000);
+            return () => clearTimeout(timer);
+        }
+    }, [isWisdomOpen]);
 
     function handleMagnetic(e: React.MouseEvent, springX: any, springY: any, ref: any) {
         if (!ref.current) return;
@@ -36,8 +50,8 @@ export function Hero() {
             className="relative min-h-screen flex flex-col justify-center px-6 md:px-20 pt-24 pb-12 overflow-hidden bg-[#fafafa] dark:bg-[#131212]"
         >
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 dark:opacity-5 pointer-events-none -z-20" />
-            
-            <div className="absolute inset-0 z-0 dark:hidden pointer-events-none">
+
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20">
                 <IndustrialBackground />
             </div>
 
@@ -45,94 +59,224 @@ export function Hero() {
             <div className="hidden dark:block absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] -z-10 animate-pulse pointer-events-none" />
             <div className="hidden dark:block absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-orange-600/5 rounded-full blur-[140px] -z-10 animate-pulse pointer-events-none" />
 
-            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center relative z-10 w-full mt-10">
-                <motion.div 
+            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center relative z-10 w-full mt-4 lg:mt-0">
+                <motion.div
                     initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}
-                    className="lg:col-span-7 z-10 space-y-8"
+                    className="lg:col-span-8 z-10 space-y-6"
                 >
-                    <div className="flex flex-col gap-4">
-                        <label className="font-label text-[11px] uppercase tracking-[0.4em] font-black text-cyan-600 dark:text-[#ff4d00] flex items-center gap-3">
-                            <span className="w-12 h-px bg-cyan-600 dark:bg-[#ff4d00]" />
+                    <div className="flex flex-col gap-2">
+                        <label className="font-label text-[10px] uppercase tracking-[0.4em] font-black text-cyan-600 dark:text-[#ff4d00] flex items-center gap-3">
+                            <span className="w-10 h-px bg-cyan-600 dark:bg-[#ff4d00]" />
                             System_Identity_Active
                         </label>
-                        <h1 className="font-headline text-6xl sm:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.85] text-foreground dark:text-[#e5e2e1]">
+                        <h1 className="font-headline text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] text-foreground dark:text-[#e5e2e1]">
                             I'm <span className="group relative inline-block">
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-500 to-purple-500 dark:from-[#ff4d00] dark:to-[#ff8c00] group-hover:tracking-widest transition-all duration-700 cursor-default">SIDDHARTH</span>
-                                <span className="absolute -bottom-2 left-0 w-0 h-2 bg-orange-500 dark:bg-[#ff4d00] group-hover:w-full transition-all duration-500" />
                             </span><br />
-                            <span className="opacity-90">Industrial Engineer<span className="text-cyan-600 dark:text-[#ff4d00]">.</span></span>
+                            <motion.span
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5, duration: 0.8 }}
+                                className="opacity-80 grayscale hover:grayscale-0 transition-all duration-500 text-3xl sm:text-5xl lg:text-6xl block mt-2"
+                            >
+                                Industrial Engineer<span className="text-cyan-600 dark:text-[#ff4d00]">.</span>
+                            </motion.span>
                         </h1>
                     </div>
 
-                    <p className="font-body text-xl md:text-2xl text-muted-foreground dark:text-[#e5e2e1]/70 max-w-2xl leading-relaxed">
-                        Optimizing complex systems through <span className="text-foreground dark:text-white font-bold">industrial intelligence</span> and <span className="text-foreground dark:text-white font-bold">data-driven orchestration</span>. Building the future of autonomous retail and supply chain.
-                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <div className="space-y-6">
+                            <p className="font-body text-base lg:text-lg text-muted-foreground dark:text-[#e5e2e1]/70 max-w-md leading-relaxed">
+                                Optimizing complex systems through <span className="text-foreground dark:text-white font-bold">industrial intelligence</span> and <span className="text-foreground dark:text-white font-bold">data-driven orchestration</span>.
+                            </p>
 
-                    <div className="flex flex-wrap items-center gap-10 pt-4">
-                        <motion.a 
-                            href="#projects" 
-                            whileHover={{ scale: 1.05, x: 10 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="group relative px-10 py-5 rounded-2xl bg-black dark:bg-gradient-to-r dark:from-[#ff4d00] dark:to-[#ff8c00] text-white font-headline font-black text-lg overflow-hidden flex items-center gap-3 shadow-[0_20px_40px_rgba(255,77,0,0.2)]"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                            View Projects
-                            <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-                        </motion.a>
-                        
-                        <a href="https://drive.google.com/file/d/1y24AaEUOh5mpXISe99io-O-3wn7HST4F/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ff4d00] font-headline font-black text-xl">
-                            <span className="tracking-tight">Get_Resume</span>
-                            <div className="w-0 h-1 bg-cyan-700 dark:bg-[#ff4d00] group-hover:w-full transition-all duration-500" />
-                        </a>
-                    </div>
-                    
-                    <div className="flex items-center space-x-6 pt-12">
-                        <motion.a 
-                            ref={githubRef}
-                            onMouseMove={(e) => handleMagnetic(e, githubX, githubY, githubRef)}
-                            onMouseLeave={() => resetMagnetic(githubX, githubY)}
-                            style={{ x: githubX, y: githubY }}
-                            href="https://github.com/siddharthkaulagi" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ff4d00] hover:border-cyan-500/20 dark:hover:border-[#ff4d00]/20 transition-all duration-300 shadow-xl"
-                        >
-                            <Github size={24} />
-                        </motion.a>
-                        <motion.a 
-                            ref={linkedinRef}
-                            onMouseMove={(e) => handleMagnetic(e, linkedinX, linkedinY, linkedinRef)}
-                            onMouseLeave={() => resetMagnetic(linkedinX, linkedinY)}
-                            style={{ x: linkedinX, y: linkedinY }}
-                            href="https://www.linkedin.com/in/siddharth-kaulagi-041ba4220/" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="p-4 rounded-2xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ff4d00] hover:border-cyan-500/20 dark:hover:border-[#ff4d00]/20 transition-all duration-300 shadow-xl"
-                        >
-                            <Linkedin size={24} />
-                        </motion.a>
+                            <div className="flex flex-wrap items-center gap-6">
+                                <motion.a
+                                    href="#projects"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="group relative px-6 py-3 rounded-xl bg-black dark:bg-gradient-to-r dark:from-[#ff4d00] dark:to-[#ff8c00] text-white font-headline font-black text-base overflow-hidden flex items-center gap-2 shadow-xl shadow-orange-500/10"
+                                >
+                                    View Projects <ArrowRight size={18} />
+                                </motion.a>
+
+                                <a href="https://drive.google.com/file/d/1y24AaEUOh5mpXISe99io-O-3wn7HST4F/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ff4d00] font-headline font-black text-sm">
+                                    <span className="tracking-tight">Get_Resume</span>
+                                    <div className="w-0 h-0.5 bg-cyan-700 dark:bg-[#ff4d00] group-hover:w-full transition-all duration-500" />
+                                </a>
+                            </div>
+
+                            <div className="flex flex-col gap-4 pt-4 border-t border-black/5 dark:border-white/5 w-fit">
+                                <div className="flex items-center space-x-4">
+                                    <motion.a
+                                        ref={githubRef}
+                                        onMouseMove={(e) => handleMagnetic(e, githubX, githubY, githubRef)}
+                                        onMouseLeave={() => resetMagnetic(githubX, githubY)}
+                                        style={{ x: githubX, y: githubY }}
+                                        href="https://github.com/siddharthkaulagi"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-3 rounded-xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ff4d00] transition-colors shadow-sm"
+                                    >
+                                        <Github size={20} />
+                                    </motion.a>
+                                    <motion.a
+                                        ref={linkedinRef}
+                                        onMouseMove={(e) => handleMagnetic(e, linkedinX, linkedinY, linkedinRef)}
+                                        onMouseLeave={() => resetMagnetic(linkedinX, linkedinY)}
+                                        style={{ x: linkedinX, y: linkedinY }}
+                                        href="https://www.linkedin.com/in/siddharth-kaulagi-041ba4220/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-3 rounded-xl bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-cyan-600 dark:hover:text-[#ff4d00] transition-colors shadow-sm"
+                                    >
+                                        <Linkedin size={20} />
+                                    </motion.a>
+                                </div>
+                                <motion.button
+                                    onClick={() => {
+                                        const nextIdx = Math.floor(Math.random() * ONE_PIECE_QUOTES.length);
+                                        setCurrentQuoteIndex(nextIdx);
+                                        setIsWisdomOpen(true);
+                                    }}
+                                    whileHover={{ scale: 1.05 }}
+                                    className="px-4 py-2 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-2 group transition-all"
+                                >
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                    What Motivates Me
+                                </motion.button>
+                            </div>
+                        </div>
+
+                        {/* Interactive Terminal Box sits side-by-side with description on large screens */}
+                        <div className="relative group w-full">
+                            <div className="absolute -top-3 left-4 px-3 py-1 bg-cyan-600 dark:bg-[#ff4d00] rounded-full z-20 shadow-lg">
+                                <span className="text-[9px] uppercase font-black tracking-widest text-white whitespace-nowrap">Explore System [CMD]</span>
+                            </div>
+
+                            <motion.button
+                                onClick={() => setIsTerminalOpen(true)}
+                                whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 77, 0, 0.08)" }}
+                                whileTap={{ scale: 0.98 }}
+                                className="p-6 pt-10 rounded-[32px] bg-orange-50/30 dark:bg-[#ff4d00]/[0.05] backdrop-blur-md border border-[#ff4d00]/30 dark:border-[#ff4d00]/20 font-mono text-[9px] md:text-[10px] relative overflow-hidden text-left w-full hover:border-[#ff4d00]/60 transition-all duration-500 shadow-xl shadow-orange-500/5 dark:shadow-none"
+                            >
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="flex gap-1.5">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-red-400/30 dark:bg-red-500/20" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-amber-400/30 dark:bg-amber-500/20" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/30 dark:bg-emerald-500/20" />
+                                    </div>
+                                    <span className="text-[8px] text-[#ff4d00]/60 dark:text-[#ff4d00]/40 font-black uppercase tracking-[0.2em]">NODE:SID_OS</span>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 group/line hover:bg-black/5 dark:hover:bg-white/5 p-1 -ml-1 rounded transition-colors">
+                                        <span className="text-purple-600 dark:text-purple-400 font-bold shrink-0">Identity</span>
+                                        <span className="text-black/20 dark:text-white/20">:</span>
+                                        <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-tight line-clamp-1">"Siddharth_K."</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 group/line hover:bg-black/5 dark:hover:bg-white/5 p-1 -ml-1 rounded transition-colors">
+                                        <span className="text-cyan-600 dark:text-cyan-400 font-bold shrink-0">Access</span>
+                                        <span className="text-black/20 dark:text-white/20">:</span>
+                                        <span className="text-amber-600 dark:text-amber-400 font-bold uppercase tracking-tight line-clamp-1">OPERATIONAL_MOD_v81</span>
+                                    </div>
+
+                                    <div className="pt-4 mt-2 border-t border-black/5 dark:border-white/5">
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff4d00]/10 dark:bg-[#ff4d00]/20 border border-[#ff4d00]/20">
+                                                <span className="text-[#ff4d00] font-black animate-pulse text-[8px]">RUN</span>
+                                                <span className="text-[#ff4d00] font-black uppercase tracking-[0.1em] text-[8px] underline decoration-[#ff4d00]/30 underline-offset-4">Launch_Terminal.cmd</span>
+                                            </div>
+                                            <div className="flex -space-x-1 overflow-hidden">
+                                                {[1, 2, 3].map((i) => (
+                                                    <div key={i} className="inline-block h-4 w-4 rounded-full ring-2 ring-white dark:ring-[#131212] bg-cyan-600 overflow-hidden">
+                                                        <div className="w-full h-full opacity-50 bg-gradient-to-br from-white/20 to-transparent" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Grid Pattern Overlay for technical feel */}
+                                <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(#000_1px,transparent_1px)] dark:bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px]" />
+                            </motion.button>
+                        </div>
                     </div>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.2 }}
-                    className="lg:col-span-5 relative group mt-10 lg:mt-0"
+                    className="lg:col-span-4 relative group"
                 >
-                    <div className="relative w-full max-w-lg mx-auto aspect-[4/5] rounded-[60px] overflow-hidden border-[12px] border-white dark:border-[#1c1b1b] shadow-[0_80px_100px_rgba(0,0,0,0.1)] dark:shadow-none group-hover:rotate-2 transition-transform duration-1000">
-                        <Image alt="Siddharth Kaulagi" src="/profile.png" fill className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[3000ms]" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    <div className="relative w-full aspect-[4/5] rounded-[40px] overflow-hidden border-8 border-white dark:border-[#1c1b1b] shadow-2xl group-hover:rotate-1 transition-transform duration-[2000ms] ease-out">
+                        <Image alt="Siddharth Kaulagi" src="/profile.png" fill className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[3000ms]" />
                     </div>
 
-                    {/* Industrial Tag Overlay */}
-                    <div className="absolute -bottom-8 -left-8 bg-white dark:bg-gradient-to-br dark:from-[#ff4d00] dark:to-[#ff8c00] p-8 rounded-[36px] shadow-2xl border border-black/5 dark:border-transparent transform group-hover:-translate-y-4 group-hover:rotate-[-4deg] transition-all duration-700">
-                        <div className="flex items-center gap-3 mb-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
-                            <span className="font-label text-[10px] uppercase tracking-[0.3em] text-emerald-500/80 dark:text-white font-black whitespace-nowrap drop-shadow-[0_0_10px_rgba(52,211,153,0.6)]">Status: Active</span>
+                    <div className="absolute -bottom-6 -left-6 bg-white dark:bg-gradient-to-br dark:from-[#ff4d00] dark:to-[#ff8c00] p-5 rounded-3xl shadow-2xl border border-black/5 transform group-hover:-translate-y-2 transition-all duration-700">
+                        <div className="flex items-center gap-2 mb-1">
+                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                            <span className="font-label text-[8px] uppercase tracking-[0.2em] text-emerald-500/80 dark:text-white font-black">Status: Active</span>
                         </div>
-                        <div className="font-headline font-black text-lg text-emerald-600 dark:text-emerald-300 uppercase tracking-widest drop-shadow-[0_0_20px_rgba(52,211,153,1)]">Open for Opportunities</div>
+                        <div className="font-headline font-black text-sm text-emerald-600 dark:text-emerald-300 uppercase tracking-widest">Open for OPPORTUNITY.</div>
                     </div>
                 </motion.div>
             </div>
+
+            <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+
+            <AnimatePresence>
+                {isWisdomOpen && (
+                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/80 backdrop-blur-xl pointer-events-auto"
+                        onClick={() => setIsWisdomOpen(false)}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 15 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 15 }}
+                            onClick={(e) => e.stopPropagation()}
+                            transition={{ duration: 0.2 }}
+                            className="max-w-2xl w-full bg-[#131212] border border-white/10 p-10 rounded-[40px] shadow-2xl relative"
+                        >
+                            <button
+                                onClick={() => setIsWisdomOpen(false)}
+                                className="absolute top-8 right-8 p-2 rounded-full hover:bg-white/5 transition-colors text-white/40 hover:text-white"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            <div className="space-y-8">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500">
+                                        <Quote size={24} />
+                                    </div>
+                                    <span className="text-[10px] uppercase tracking-[0.4em] font-black text-emerald-500/60">Source of Motivation</span>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <p className="font-headline text-2xl sm:text-3xl md:text-4xl font-black text-white leading-tight italic">
+                                        "{ONE_PIECE_QUOTES[currentQuoteIndex].text}"
+                                    </p>
+                                    <div className="flex items-center gap-4 pt-4">
+                                        <span className="h-px w-12 bg-white/20" />
+                                        <p className="font-label text-sm uppercase tracking-widest text-emerald-400 font-bold">
+                                            {ONE_PIECE_QUOTES[currentQuoteIndex].author}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between items-center pt-8 mt-8 border-t border-white/5">
+                                    <div className="flex items-center gap-2 text-[8px] uppercase font-black tracking-widest text-white/20">
+                                        <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                                        Quote will auto-close in 10s
+                                    </div>
+                                    <span className="text-[8px] text-white/20 uppercase tracking-tighter">System_Wisdom_v8.1.0</span>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }

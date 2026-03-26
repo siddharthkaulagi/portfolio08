@@ -30,11 +30,11 @@ export function MouseEffect() {
             if (count % 3 === 0) {
                 setTrail((prev) => [
                     ...prev.slice(-20), // Keep last 20 lightning bolts
-                    { 
-                        x: e.clientX, 
-                        y: e.clientY, 
+                    {
+                        x: e.clientX,
+                        y: e.clientY,
                         id: Date.now(),
-                        color: interactive ? "text-[#ff5f1f]" : "text-cyan-500" 
+                        color: interactive ? "text-[#ff5f1f]" : "text-cyan-500"
                     }
                 ]);
             }
@@ -55,7 +55,7 @@ export function MouseEffect() {
                     y: springY,
                     translateX: "-50%",
                     translateY: "-50%",
-                    background: isHovering 
+                    background: isHovering
                         ? "radial-gradient(circle, rgba(255, 95, 31, 0.1) 0%, transparent 70%)"
                         : "radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%)"
                 }}
@@ -67,9 +67,9 @@ export function MouseEffect() {
                     <motion.div
                         key={point.id}
                         initial={{ opacity: 1, scale: 0.2, rotate: Math.random() * 360 }}
-                        animate={{ 
-                            opacity: 0, 
-                            scale: isHovering ? 2 : 1.2, 
+                        animate={{
+                            opacity: 0,
+                            scale: isHovering ? 2 : 1.2,
                             rotate: (Math.random() * 360) + 45,
                             y: point.y + (Math.random() - 0.5) * 50
                         }}
@@ -99,29 +99,29 @@ export function MouseEffect() {
                 }}
             >
                 <motion.div
-                    animate={{ 
+                    animate={{
                         scale: isHovering ? [1, 1.5, 1.2] : [1, 1.1, 1],
                         rotate: isHovering ? [0, 10, -10, 0] : 0
                     }}
-                    transition={{ 
-                        duration: 0.5, 
+                    transition={{
+                        duration: 0.5,
                         repeat: isHovering ? Infinity : 0,
                         repeatType: "reverse"
                     }}
                 >
-                    <Zap 
-                        size={isHovering ? 48 : 32} 
+                    <Zap
+                        size={isHovering ? 48 : 32}
                         className={cn(
                             "transition-colors duration-500 stroke-2",
-                            isHovering 
-                                ? "text-[#ff5f1f] fill-[#ff5f1f] drop-shadow-[0_0_15px_#ff5f1f]" 
+                            isHovering
+                                ? "text-[#ff5f1f] fill-[#ff5f1f] drop-shadow-[0_0_15px_#ff5f1f]"
                                 : "text-cyan-500 fill-cyan-500 drop-shadow-[0_0_10px_#06b6d4]"
-                        )} 
+                        )}
                     />
-                    
+
                     {/* Electric Arc Secondary Glow */}
                     {isHovering && (
-                        <motion.div 
+                        <motion.div
                             animate={{ opacity: [0, 0.5, 0] }}
                             transition={{ duration: 0.1, repeat: Infinity }}
                             className="absolute inset-0 bg-white/30 blur-md rounded-full"

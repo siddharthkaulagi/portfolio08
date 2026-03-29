@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { SupportProtocol } from "@/components/SupportProtocol";
 
 export default function RootLayout({
   children,
@@ -37,6 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SmoothScroll />
+          <SupportProtocol />
           {/* Grainy Texture Overlay */}
           <div className="fixed inset-0 pointer-events-none z-[99999] opacity-[0.03] dark:opacity-[0.05] contrast-150 grayscale" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
           {children}

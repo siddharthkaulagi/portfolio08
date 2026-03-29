@@ -7,8 +7,15 @@ import Image from "next/image";
 import { IndustrialBackground } from "@/components/IndustrialBackground";
 import { Terminal, ONE_PIECE_QUOTES } from "@/components/Terminal";
 
-export function Hero() {
-    const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+export function Hero({ 
+    isTerminalOpen, 
+    onTerminalOpen, 
+    onTerminalClose 
+}: { 
+    isTerminalOpen: boolean; 
+    onTerminalOpen: () => void; 
+    onTerminalClose: () => void; 
+}) {
     const [isWisdomOpen, setIsWisdomOpen] = useState(false);
     const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -164,11 +171,11 @@ export function Hero() {
                         {/* Interactive Terminal Box sits side-by-side with description on large screens */}
                         <div className="relative group w-full">
                             <div className="absolute -top-3 left-4 px-3 py-1 bg-cyan-600 dark:bg-[#ff4d00] rounded-full z-20 shadow-lg">
-                                <span className="text-[9px] uppercase font-black tracking-widest text-white whitespace-nowrap">Explore System [CMD]</span>
+                                <span className="text-[9px] uppercase font-black tracking-widest text-white whitespace-nowrap">SID_OS[CMD-Terminal]</span>
                             </div>
 
                             <motion.button
-                                onClick={() => setIsTerminalOpen(true)}
+                                onClick={onTerminalOpen}
                                 whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 77, 0, 0.08)" }}
                                 whileTap={{ scale: 0.98 }}
                                 className="p-6 pt-10 rounded-[32px] bg-orange-50/30 dark:bg-[#ff4d00]/[0.05] backdrop-blur-md border border-[#ff4d00]/30 dark:border-[#ff4d00]/20 font-mono text-[9px] md:text-[10px] relative overflow-hidden text-left w-full hover:border-[#ff4d00]/60 transition-all duration-500 shadow-xl shadow-orange-500/5 dark:shadow-none"
@@ -261,8 +268,6 @@ export function Hero() {
                     </div>
                 </motion.div>
             </div>
-
-            <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
 
             <AnimatePresence>
                 {isWisdomOpen && (

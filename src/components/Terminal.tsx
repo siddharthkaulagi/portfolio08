@@ -99,9 +99,37 @@ export const ONE_PIECE_QUOTES = [
   }
 ];
 
+export const JOURNEY_VIGNETTES = [
+  {
+    image: "/comfort.png",
+    title: "Phase 1: The Standard Rejection",
+    subtitle: "Unfortunately, we regret to inform you...",
+    message: "Even Gear 5 Luffy needs a pat when the 100th 'No' hits the inbox. It's not a bug, it's just a temporary system stall. I am currently in this phase of optimization.",
+    status: "REJECTION_COUNT: 100+",
+    color: "text-[#ff4d00]"
+  },
+  {
+    image: "/hustle.png",
+    title: "Phase 2: The Gritty Rebound",
+    subtitle: "I got up again. Round 2. Tactical optimization.",
+    message: "Recruiter: 'You're too industrial.' Me: 'That's because I'm built for scale.' Resilience is my primary kernel version.",
+    status: "HUSTLE_MODE: OVERDRIVE",
+    color: "text-emerald-500"
+  },
+  {
+    image: "/optimize.png",
+    title: "Phase 3: Peak Performance",
+    subtitle: "Applying for jobs vs. Building the future.",
+    message: "Recruiter: 'We'll keep your profile on file.' Me: 'Great, I already indexed your database.' Just kidding, I'm just over-featured.",
+    status: "EFFICIENCY: 99.9%",
+    color: "text-cyan-500"
+  }
+];
+
 const COMMANDS_CONFIG = [
   { cmd: "about", desc: "know more about me" },
   { cmd: "skills", desc: "view my capabilities" },
+  { cmd: "hustle", desc: "my sarcastic career journey" },
   { cmd: "projects", desc: "explore my work" },
   { cmd: "contact", desc: "get in touch" },
   { cmd: "github", desc: "open my GitHub" },
@@ -140,6 +168,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const terminalEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastQuoteIndex = useRef<number>(-1);
+  const journeyPointer = useRef<number>(0);
 
   const executeCommand = useCallback((cmdText: string) => {
     const cmd = cmdText.toLowerCase().trim();
@@ -183,6 +212,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
             <CommandLink cmd="github" desc="open my GitHub" onClick={() => executeCommand("github")} />
             <CommandLink cmd="linkedin" desc="view my profile" onClick={() => executeCommand("linkedin")} />
             <CommandLink cmd="whyme" desc="my unique edge" onClick={() => executeCommand("whyme")} />
+            <CommandLink cmd="hustle" desc="sarcastic career journey" onClick={() => executeCommand("hustle")} />
             <CommandLink cmd="goal" desc="future vision" onClick={() => executeCommand("goal")} />
             <CommandLink cmd="motivate" desc="quotes of wisdom" onClick={() => executeCommand("motivate")} />
             <CommandLink cmd="clear" desc="reset terminal" onClick={() => executeCommand("clear")} />
@@ -274,6 +304,39 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
               <span className="h-px w-8 bg-white/20" />
               <p className="text-white/60 font-headline uppercase tracking-widest text-[10px] font-bold">{randomQuote.author}</p>
             </div>
+          </div>
+        );
+      })(),
+      hustle: (() => {
+        const v = JOURNEY_VIGNETTES[journeyPointer.current];
+        journeyPointer.current = (journeyPointer.current + 1) % JOURNEY_VIGNETTES.length;
+
+        return (
+          <div className="space-y-4 py-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <p className={`${v.color} font-black uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${v.color.replace('text-', 'bg-')} animate-pulse`} />
+              JOURNEY_LOG: {v.title}
+            </p>
+            <div className="relative w-full max-w-sm rounded-[24px] overflow-hidden border border-white/10 shadow-2xl group">
+              <img
+                src={v.image}
+                alt={v.title}
+                className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                <p className="text-[11px] text-[#ff4d00] font-black uppercase tracking-tighter mb-1">Reality Check:</p>
+                <p className="text-[13px] text-white font-bold italic leading-tight">
+                  "{v.subtitle}"
+                </p>
+              </div>
+              <div className="absolute top-4 left-4 px-2 py-0.5 bg-black/60 rounded text-[8px] font-black text-white/40 uppercase">[HUSTLE_v{journeyPointer.current}]</div>
+            </div>
+            <p className="text-slate-200 text-[14px] leading-relaxed font-medium font-body max-w-sm">
+              {v.message}
+            </p>
+            <p className="text-slate-500 italic text-[11px] font-medium border-l border-white/10 pl-3">
+              STATUS: {v.status} (Type 'hustle' again for the next phase)
+            </p>
           </div>
         );
       })()

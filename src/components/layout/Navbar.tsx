@@ -13,6 +13,8 @@ const navLinks = [
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
     { name: "Certificates", href: "#certificates" },
+    { name: "Reality", href: "#reality" },
+    { name: "Terminal", href: "#terminal", isSpecial: true },
     { name: "Contact", href: "#contact" },
 ];
 
@@ -101,7 +103,7 @@ function DecryptLogoText({ text, isHovered }: { text: string, isHovered: boolean
     return <span>{displayText}</span>;
 }
 
-export function Navbar() {
+export function Navbar({ onTerminalClick }: { onTerminalClick?: () => void }) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLogoHovered, setIsLogoHovered] = useState(false);
@@ -180,14 +182,30 @@ export function Navbar() {
                 {/* Desktop Nav */}
                 <div className="hidden lg:flex items-center gap-12 relative z-20">
                     {navLinks.map((link) => (
-                        <Link
+                        <button
                             key={link.name}
-                            href={link.href}
-                            className="font-label text-[12px] uppercase tracking-[0.3em] font-black text-muted-foreground dark:text-[#e5e2e1]/40 hover:text-foreground dark:hover:text-white transition-all relative group"
+                            onClick={(e) => {
+                                if (link.name === "Terminal") {
+                                    e.preventDefault();
+                                    onTerminalClick?.();
+                                }
+                            }}
+                            className="relative group"
                         >
-                            {link.name}
-                            <span className="absolute -bottom-2 left-0 w-0 h-1 bg-[#ff4d00] group-hover:w-full transition-all duration-500" />
-                        </Link>
+                            <Link
+                                href={link.href}
+                                className={cn(
+                                    "font-label text-[12px] uppercase tracking-[0.3em] font-black transition-all",
+                                    "text-cyan-600 dark:text-[#ff4d00] hover:text-cyan-500 dark:hover:text-[#ff8c00]"
+                                )}
+                            >
+                                {link.name}
+                                <span className={cn(
+                                    "absolute -bottom-2 left-0 w-0 h-1 transition-all duration-500 bg-cyan-600 dark:bg-[#ff4d00]",
+                                    "group-hover:w-full"
+                                )} />
+                            </Link>
+                        </button>
                     ))}
                 </div>
 
@@ -223,14 +241,28 @@ export function Navbar() {
                         {/* Mobile Navigation Content */}
                         <div className="flex flex-col space-y-8">
                             {navLinks.map((link, idx) => (
-                                <Link
+                                <button
                                     key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="font-headline text-4xl font-black text-foreground dark:text-[#e5e2e1] hover:text-[#ff4d00] transition-colors uppercase tracking-tighter"
+                                    onClick={(e) => {
+                                        if (link.name === "Terminal") {
+                                            e.preventDefault();
+                                            onTerminalClick?.();
+                                            setIsMobileMenuOpen(false);
+                                        } else {
+                                            setIsMobileMenuOpen(false);
+                                        }
+                                    }}
+                                    className="text-left"
                                 >
-                                    {link.name}
-                                </Link>
+                                    <Link
+                                        href={link.href}
+                                        className={cn(
+                                            "font-headline text-4xl font-black uppercase tracking-tighter transition-colors text-cyan-600 dark:text-[#ff4d00] hover:text-cyan-500 dark:hover:text-[#ff8c00]"
+                                        )}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </button>
                             ))}
                             <div className="flex items-center justify-between pt-10 border-t border-black/5 dark:border-white/10">
                                 <div className="flex items-center gap-4">

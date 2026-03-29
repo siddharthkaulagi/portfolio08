@@ -18,10 +18,6 @@ export function Hero({
 }) {
     const [isWisdomOpen, setIsWisdomOpen] = useState(false);
     const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-    // Using the 3 actual pictures provided by the user
-    const heroImages = ["/hero1.jpg", "/hero2.jpg", "/hero3.jpg"];
 
     const githubX = useSpring(0, { damping: 12, stiffness: 150 });
     const githubY = useSpring(0, { damping: 12, stiffness: 150 });
@@ -41,13 +37,6 @@ export function Hero({
         }
     }, [isWisdomOpen]);
 
-    // Carousel Timer
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
-        }, 3000); // Change every 3 seconds
-        return () => clearInterval(timer);
-    }, [heroImages.length]);
 
     function handleMagnetic(e: React.MouseEvent, springX: any, springY: any, ref: any) {
         if (!ref.current) return;
@@ -208,11 +197,9 @@ export function Hero({
                                                 <span className="text-[#ff4d00] font-black uppercase tracking-[0.1em] text-[8px] underline decoration-[#ff4d00]/30 underline-offset-4">Launch_Terminal.cmd</span>
                                             </div>
                                             <div className="flex -space-x-1 overflow-hidden">
-                                                {[1, 2, 3].map((i) => (
-                                                    <div key={i} className="inline-block h-4 w-4 rounded-full ring-2 ring-white dark:ring-[#131212] bg-cyan-600 overflow-hidden">
-                                                        <div className="w-full h-full opacity-50 bg-gradient-to-br from-white/20 to-transparent" />
-                                                    </div>
-                                                ))}
+                                                <div className="inline-block h-4 w-4 rounded-full ring-2 ring-white dark:ring-[#131212] bg-cyan-600 overflow-hidden">
+                                                    <div className="w-full h-full opacity-50 bg-gradient-to-br from-white/20 to-transparent" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -230,33 +217,13 @@ export function Hero({
                     className="lg:col-span-4 relative group"
                 >
                     <div className="relative w-full aspect-[4/5] rounded-[40px] overflow-hidden border-8 border-white dark:border-[#1c1b1b] shadow-2xl group-hover:rotate-1 transition-transform duration-[2000ms] ease-out">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={currentImageIndex}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.8, ease: "easeInOut" }}
-                                className="absolute inset-0"
-                            >
-                                <Image
-                                    alt="Siddharth Kaulagi"
-                                    src={heroImages[currentImageIndex]}
-                                    fill
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[5000ms]"
-                                />
-                            </motion.div>
-                        </AnimatePresence>
-
-                        {/* Pagination Dots */}
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                            {heroImages.map((_, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${idx === currentImageIndex ? "w-6 bg-[#ff4d00]" : "bg-white/50"}`}
-                                />
-                            ))}
-                        </div>
+                        <Image
+                            alt="Siddharth Kaulagi"
+                            src="/hero2.jpg"
+                            fill
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[5000ms]"
+                            priority
+                        />
                     </div>
 
                     <div className="absolute -bottom-6 -left-6 bg-white dark:bg-gradient-to-br dark:from-[#ff4d00] dark:to-[#ff8c00] p-5 rounded-3xl shadow-2xl border border-black/5 transform group-hover:-translate-y-2 transition-all duration-700">

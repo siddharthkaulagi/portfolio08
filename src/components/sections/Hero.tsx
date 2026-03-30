@@ -7,14 +7,14 @@ import Image from "next/image";
 import { IndustrialBackground } from "@/components/IndustrialBackground";
 import { Terminal, ONE_PIECE_QUOTES } from "@/components/Terminal";
 
-export function Hero({ 
-    isTerminalOpen, 
-    onTerminalOpen, 
-    onTerminalClose 
-}: { 
-    isTerminalOpen: boolean; 
-    onTerminalOpen: () => void; 
-    onTerminalClose: () => void; 
+export function Hero({
+    isTerminalOpen,
+    onTerminalOpen,
+    onTerminalClose
+}: {
+    isTerminalOpen: boolean;
+    onTerminalOpen: () => void;
+    onTerminalClose: () => void;
 }) {
     const [isWisdomOpen, setIsWisdomOpen] = useState(false);
     const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
@@ -109,7 +109,7 @@ export function Hero({
                                     View Projects <ArrowRight size={18} />
                                 </motion.a>
 
-                                <a href="https://drive.google.com/file/d/1y24AaEUOh5mpXISe99io-O-3wn7HST4F/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ff4d00] font-headline font-black text-sm">
+                                <a href="https://drive.google.com/file/d/1K17iyrLkLaXjdFCfwDWIo6WSJqlwJDae/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ff4d00] font-headline font-black text-sm">
                                     <span className="tracking-tight">Get_Resume</span>
                                     <div className="w-0 h-0.5 bg-cyan-700 dark:bg-[#ff4d00] group-hover:w-full transition-all duration-500" />
                                 </a>

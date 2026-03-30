@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# <span style="color:#FF4D00">SIDDHARTH KAULAGI</span>
 
-First, run the development server:
+**Industrial Engineer · Systems Thinker · Builder**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[![Portfolio](https://img.shields.io/badge/Portfolio-FF4D00?style=for-the-badge&logo=vercel&logoColor=white)](https://siddharthkaulagi.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/siddharthkaulagi-041ba4220)
+[![GitHub](https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=white)](https://github.com/siddharthkaulagi)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+</div>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🟠 ABOUT THIS PROJECT
 
-## Learn More
+Built on a Sunday afternoon with no plan — just curiosity, basic tech literacy, and a few AI tools. No dev background. Just an Industrial Engineer who understands systems and wanted to see how far that gets you in 2026.
 
-To learn more about Next.js, take a look at the following resources:
+> **Answer: pretty far.**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ THE STACK
 
-## Deploy on Vercel
+| | Tool | What I used it for |
+|---|---|---|
+| 🎨 | **Google Stitch** | UI generation — aesthetic direction in, full design system out |
+| ⚡ | **Antigravity + MCP Server** | Design to Next.js 15 / React 19 code via Stitch MCP Server |
+| 🧠 | **Anthropic Claude Opus** | Architecture decisions, Framer Motion logic, complex debugging |
+| 🤖 | **Google Gemini CLI + Flow** | CSS polish, UI fixes, AI image generation for visual assets |
+| 🛠️ | **VS Code + GitHub** | Version control, dev environment |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 💎 WHAT'S INSIDE
+
+| Feature | Description |
+|---|---|
+| 🖥️ **SID_OS Terminal** | Fully interactive CLI — type actual commands, get actual responses |
+| 🔧 **Debug Log** | Job hunt rejections turned into sarcastic interactive entries with accordion expanders |
+| ⚡ **Core Matrix Cards** | 3D tilt skill cards with decrypt text animation on hover |
+| 🧲 **Magnetic UX** | Buttons and icons that physically follow the cursor |
+| 🫀 **Support Protocol** | One Piece quote modal — auto-closes after 10 seconds |
+| 🎨 **Aesthetic** | Obsidian Kinetic dark theme — Industrial Orange `#FF4D00` + Cyan accents |
+
+---
+
+## 💡 THE LESSON
+
+> AI tools aren't built for experts. They're for anyone sitting on an idea waiting to "know enough."
+> Pick a boring Sunday. Open a tool. See how far you get.
+
+---
+
+## 🚀 TECH STACK BREAKDOWN
+
+![Next.js](https://img.shields.io/badge/Next.js_15-111111?style=flat-square&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-FF4D00?style=flat-square&logo=framer&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-111111?style=flat-square&logo=vercel&logoColor=white)
+
+---
+
+<div align="center">
+
+*Built on a Sunday. Man + Machine.* 🤝🏽🤖
+
+**[siddharthkaulagi.vercel.app](https://siddharthkaulagi.vercel.app/)**
+
+</div>

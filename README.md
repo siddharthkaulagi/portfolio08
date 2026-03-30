@@ -54,12 +54,27 @@ Built on a Sunday afternoon with no plan — just curiosity, basic tech literacy
 
 ## 🚀 TECH STACK BREAKDOWN
 
-![Next.js](https://img.shields.io/badge/Next.js_15-111111?style=flat-square&logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-FF4D00?style=flat-square&logo=framer&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-111111?style=flat-square&logo=vercel&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js_15-111111?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-FF4D00?style=for-the-badge&logo=framer&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-111111?style=for-the-badge&logo=vercel&logoColor=white)
+
+---
+
+## 📂 PROJECT FILES
+
+| File | Description |
+|---|---|
+| [`src/app/page.tsx`](src/app/page.tsx) | Main Entry Point |
+| [`src/app/layout.tsx`](src/app/layout.tsx) | System Layout |
+| [`src/components/Terminal.tsx`](src/components/Terminal.tsx) | Industrial Terminal — SID_OS |
+| [`src/components/sections/TheOptimizationReality.tsx`](src/components/sections/TheOptimizationReality.tsx) | Debug Log — The Optimization Reality |
+| [`src/components/SupportProtocol.tsx`](src/components/SupportProtocol.tsx) | Support Protocol Modal |
+| [`src/components/IndustrialBackground.tsx`](src/components/IndustrialBackground.tsx) | Industrial Backgrounds |
+| [`src/components/sections/Projects.tsx`](src/components/sections/Projects.tsx) | Project Registry |
+| [`src/components/sections/Certificates.tsx`](src/components/sections/Certificates.tsx) | Digital Certificates |
 
 ---
 

@@ -1,11 +1,23 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Award, Calendar, ExternalLink, Building2, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { Award, Calendar, ExternalLink, Building2, ShieldCheck, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 const certificates = [
+    {
+        title: "Lean Six Sigma White Belt",
+        fullName: "Lean Six Sigma White Belt Certification",
+        issuer: "Six Sigma Council",
+        date: "Apr 2026",
+        image: "/certificates/lean-six-sigma.png",
+        description: "Certified in Lean Six Sigma methodologies, focusing on process improvement, waste reduction, and operational efficiency.",
+        tags: ["Six Sigma", "Operations", "Lean"],
+        link: "https://drive.google.com/file/d/1daBqPaVrRpSiWnuryYpndtuRmSFQ3_1M/view?usp=sharing",
+        status: "Verified",
+        glowColor: "rgba(6, 182, 212, 0.15)"
+    },
     {
         title: "Data Visualisation",
         fullName: "Empowering Business with Effective Insights",
@@ -145,12 +157,43 @@ function CertCard({ cert, index }: { cert: any, index: number }) {
 }
 
 export function Certificates() {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [isHovered, setIsHovered] = useState(false);
+    
+    // Auto-scroll Speed Control Variable (pixels per frame)
+    const SCROLL_SPEED = 0.5;
+
+    useEffect(() => {
+        let animationId: number;
+        
+        const autoScroll = () => {
+            if (scrollRef.current && !isHovered) {
+                const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+                // If we haven't reached the end, keep scrolling
+                if (scrollLeft + clientWidth < scrollWidth - 1) {
+                    scrollRef.current.scrollLeft += SCROLL_SPEED;
+                }
+            }
+            animationId = requestAnimationFrame(autoScroll);
+        };
+
+        animationId = requestAnimationFrame(autoScroll);
+        return () => cancelAnimationFrame(animationId);
+    }, [isHovered, SCROLL_SPEED]);
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (scrollRef.current) {
+            const scrollAmount = direction === 'left' ? -400 : 400;
+            scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    };
+
     return (
         <section id="certificates" className="relative py-40 bg-background dark:bg-[#131313] overflow-hidden">
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 pointer-events-none" />
             
             <div className="max-w-[1600px] mx-auto px-6 md:px-20 relative z-10">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -163,10 +206,42 @@ export function Certificates() {
                     </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 lg:gap-12 perspective-[2000px]">
-                    {certificates.map((cert, index) => (
-                        <CertCard key={index} cert={cert} index={index} />
-                    ))}
+                <div 
+                    className="relative group/carousel -mx-6 px-6 md:-mx-20 md:px-20"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    onTouchStart={() => setIsHovered(true)}
+                    onTouchEnd={() => setIsHovered(false)}
+                >
+                    {/* Navigation Buttons */}
+                    <button 
+                        onClick={() => scroll('left')}
+                        className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center rounded-full bg-slate-900/80 dark:bg-white/10 backdrop-blur-xl border border-white/10 text-white opacity-0 group-hover/carousel:opacity-100 transition-all hover:bg-cyan-600 dark:hover:bg-[#ffb59c] hover:scale-110 shadow-2xl hidden md:flex cursor-pointer"
+                        aria-label="Scroll Left"
+                    >
+                        <ChevronLeft size={28} />
+                    </button>
+                    
+                    <button 
+                        onClick={() => scroll('right')}
+                        className="absolute right-4 md:right-12 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center rounded-full bg-slate-900/80 dark:bg-white/10 backdrop-blur-xl border border-white/10 text-white opacity-0 group-hover/carousel:opacity-100 transition-all hover:bg-cyan-600 dark:hover:bg-[#ffb59c] hover:scale-110 shadow-2xl hidden md:flex cursor-pointer"
+                        aria-label="Scroll Right"
+                    >
+                        <ChevronRight size={28} />
+                    </button>
+
+                    {/* Carousel Container */}
+                    <div 
+                        ref={scrollRef}
+                        className="flex gap-8 lg:gap-12 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory perspective-[2000px] scrollbar-hide"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
+                        {certificates.map((cert, index) => (
+                            <div key={index} className="min-w-[340px] md:min-w-[400px] lg:min-w-[450px] flex-shrink-0 snap-center">
+                                <CertCard cert={cert} index={index} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

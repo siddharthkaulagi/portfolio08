@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Award, Calendar, ExternalLink, Building2, ShieldCheck, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
@@ -9,14 +9,26 @@ const certificates = [
     {
         title: "Lean Six Sigma White Belt",
         fullName: "Lean Six Sigma White Belt Certification",
-        issuer: "Six Sigma Council",
+        issuer: "Six Sigma Online · C.S.S.C.",
         date: "Apr 2026",
         image: "/certificates/lean-six-sigma.png",
-        description: "Certified in Lean Six Sigma methodologies, focusing on process improvement, waste reduction, and operational efficiency.",
+        description: "Completed Lean Six Sigma White Belt requirements aligned with the Council for Six Sigma Certification, focusing on process improvement and operational efficiency.",
         tags: ["Six Sigma", "Operations", "Lean"],
         link: "https://drive.google.com/file/d/1daBqPaVrRpSiWnuryYpndtuRmSFQ3_1M/view?usp=sharing",
         status: "Verified",
         glowColor: "rgba(6, 182, 212, 0.15)"
+    },
+    {
+        title: "AI Systems Learning",
+        fullName: "Remote AI Systems Learning Program",
+        issuer: "Innomatics Research Labs",
+        date: "May 2026",
+        image: "/certificates/innomatics-agentic-ai.png",
+        description: "Completed remote learning track covering Python, FastAPI, prompt engineering, LangChain, and RAG fundamentals (Feb–May 2026).",
+        tags: ["Python", "LangChain", "Learning"],
+        link: "https://drive.google.com/file/d/11Af7ZMEhsMjC0E5Melpq87Ouy46ujK9p/view?usp=sharing",
+        status: "Verified",
+        glowColor: "rgba(139, 92, 246, 0.15)"
     },
     {
         title: "Data Visualisation",
@@ -50,7 +62,7 @@ const certificates = [
         image: "/certificates/ge-aerospace-supply-chain.png",
         description: "Tasked in turbofan disassembly requirements and disposition of non-conforming turbine blades.",
         tags: ["SCM", "Aero", "Mfg"],
-        link: "https://drive.google.com/file/d/1hLZb5NRx9oMa3Omhv6TCYdxajsVRo617/view?usp=drive_link",
+        link: "https://drive.google.com/file/d/1hLZb5NRx9oMa3Omhv6TCYdxajsVRo617/view?usp=sharing",
         status: "Verified",
         glowColor: "rgba(255, 95, 31, 0.15)"
     },
@@ -69,49 +81,25 @@ const certificates = [
 ];
 
 function CertCard({ cert, index }: { cert: any, index: number }) {
-    const cardRef = useRef<HTMLDivElement>(null);
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const rotateX = useSpring(useTransform(mouseY, [-200, 200], [8, -8]), { damping: 20, stiffness: 150 });
-    const rotateY = useSpring(useTransform(mouseX, [-200, 200], [-8, 8]), { damping: 20, stiffness: 150 });
-
-    function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        mouseX.set(e.clientX - (rect.left + rect.width / 2));
-        mouseY.set(e.clientY - (rect.top + rect.height / 2));
-    }
-
-    function handleMouseLeave() {
-        mouseX.set(0);
-        mouseY.set(0);
-    }
-
     return (
         <motion.div
-            ref={cardRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
-            className="group relative h-full perspective-[2000px]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.55, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative h-full"
         >
-            <div className="relative p-8 rounded-[40px] bg-card dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 backdrop-blur-xl h-full flex flex-col overflow-hidden shadow-2xl transition-all duration-700">
-                <motion.div 
-                    className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+            <div className="relative p-8 rounded-[40px] bg-card dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 backdrop-blur-xl h-full flex flex-col overflow-hidden shadow-2xl transition-shadow duration-500 hover:shadow-[0_24px_60px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_24px_60px_rgba(0,0,0,0.45)] hover:border-cyan-500/15 dark:hover:border-[#ff5f1f]/20">
+                <div
+                    className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{
-                        background: `radial-gradient(circle 350px at ${mouseX.get() + 150}px ${mouseY.get() + 250}px, ${cert.glowColor}, transparent)`,
-                        inset: -200
+                        background: `radial-gradient(circle at 50% 40%, ${cert.glowColor}, transparent 70%)`,
                     }}
                 />
 
-                <div className="relative h-60 w-full mb-10 overflow-hidden" style={{ transform: "translateZ(50px)" }}>
+                <div className="relative h-60 w-full mb-10 overflow-hidden">
                     <div className="relative w-full h-full rounded-[32px] overflow-hidden border border-black/5 dark:border-white/5 shadow-inner">
-                        <Image src={cert.image} alt={cert.title} fill className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-[2000ms]" />
+                        <Image src={cert.image} alt={cert.title} fill className="object-cover opacity-85 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                         
                         <a 
@@ -125,7 +113,7 @@ function CertCard({ cert, index }: { cert: any, index: number }) {
                     </div>
                 </div>
 
-                <div className="space-y-4 relative z-10 flex-grow" style={{ transform: "translateZ(30px)" }}>
+                <div className="space-y-4 relative z-10 flex-grow">
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-[#131212] border border-black/5 dark:border-white/5 w-fit">
                         <ShieldCheck size={14} className="text-cyan-600 dark:text-[#ffb59c]" />
                         <span className="font-label text-[9px] uppercase tracking-widest font-black text-muted-foreground dark:text-[#e5e2e1]/60">Verified_System</span>
@@ -144,7 +132,7 @@ function CertCard({ cert, index }: { cert: any, index: number }) {
                     </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mt-8 relative z-10" style={{ transform: "translateZ(20px)" }}>
+                <div className="flex flex-wrap gap-2 mt-8 relative z-10">
                     {cert.tags.map((tag: any, idx: number) => (
                         <span key={idx} className="font-label text-[9px] uppercase tracking-widest font-black px-4 py-2 bg-slate-50 dark:bg-[#131212] rounded-xl text-muted-foreground dark:text-[#e5e2e1]/40 border border-black/5 dark:border-white/5 group-hover:border-cyan-500/20 dark:group-hover:border-[#ff5f1f]/20 transition-all duration-300">
                             {tag}
@@ -189,7 +177,7 @@ export function Certificates() {
     };
 
     return (
-        <section id="certificates" className="relative py-40 bg-background dark:bg-[#131313] overflow-hidden">
+        <section id="certificates" className="relative py-40 bg-background dark:bg-[#131313] overflow-hidden scroll-mt-28 md:scroll-mt-32">
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 pointer-events-none" />
             
             <div className="max-w-[1600px] mx-auto px-6 md:px-20 relative z-10">
@@ -233,7 +221,7 @@ export function Certificates() {
                     {/* Carousel Container */}
                     <div 
                         ref={scrollRef}
-                        className="flex gap-8 lg:gap-12 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory perspective-[2000px] scrollbar-hide"
+                        className="flex gap-8 lg:gap-12 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide scroll-smooth"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
                         {certificates.map((cert, index) => (

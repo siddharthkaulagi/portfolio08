@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence, color } from "framer-motion";
-import { X, Minus, Square, Terminal as TerminalIcon, Maximize2, Minimize2 } from "lucide-react";
-import { text } from "stream/consumers";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Minus, Terminal as TerminalIcon, Maximize2, Minimize2 } from "lucide-react";
+import { experiences, certificateLinks } from "@/lib/portfolio-data";
 
 interface HistoryItem {
   command: string;
@@ -129,8 +129,10 @@ export const JOURNEY_VIGNETTES = [
 const COMMANDS_CONFIG = [
   { cmd: "about", desc: "know more about me" },
   { cmd: "skills", desc: "view my capabilities" },
-  { cmd: "hustle", desc: "my sarcastic career journey" },
+  { cmd: "experience", desc: "learning & simulations" },
+  { cmd: "certificates", desc: "verified credentials" },
   { cmd: "projects", desc: "explore my work" },
+  { cmd: "hustle", desc: "my sarcastic career journey" },
   { cmd: "contact", desc: "get in touch" },
   { cmd: "github", desc: "open my GitHub" },
   { cmd: "linkedin", desc: "view my profile" },
@@ -198,6 +200,28 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
       return;
     }
 
+    if (cmd === "certificates" || cmd.startsWith("certificates ")) {
+      const slug = cmd === "certificates" ? "" : cmd.slice(13).trim();
+      if (slug) {
+        const entry = certificateLinks[slug];
+        if (entry) {
+          window.open(entry.url, "_blank");
+          setHistory(prev => [...prev, {
+            command: cmdText,
+            output: <p className="text-emerald-500">Opening credential: {entry.label}...</p>,
+            timestamp: new Date().toLocaleTimeString()
+          }]);
+        } else {
+          setHistory(prev => [...prev, {
+            command: cmdText,
+            output: <p className="text-red-400">Unknown slug. Type &apos;certificates&apos; to see available names (e.g. certificates ge).</p>,
+            timestamp: new Date().toLocaleTimeString()
+          }]);
+        }
+        return;
+      }
+    }
+
     let output: React.ReactNode = "";
 
     const responses: Record<string, string | React.ReactNode> = {
@@ -207,6 +231,8 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
             <CommandLink cmd="about" desc="know more about me" onClick={() => executeCommand("about")} />
             <CommandLink cmd="skills" desc="view my capabilities" onClick={() => executeCommand("skills")} />
+            <CommandLink cmd="experience" desc="learning & simulations" onClick={() => executeCommand("experience")} />
+            <CommandLink cmd="certificates" desc="verified credentials" onClick={() => executeCommand("certificates")} />
             <CommandLink cmd="projects" desc="explore my work" onClick={() => executeCommand("projects")} />
             <CommandLink cmd="contact" desc="get in touch" onClick={() => executeCommand("contact")} />
             <CommandLink cmd="github" desc="open my GitHub" onClick={() => executeCommand("github")} />
@@ -259,9 +285,48 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
                 <li>- SQL (Basic)</li>
                 <li>- Arena Simulation</li>
                 <li>- SolidWorks</li>
+                <li>- Python / FastAPI (Basic)</li>
+                <li>- LangChain / RAG (Learning Program)</li>
               </ul>
             </div>
           </div>
+        </div>
+      ),
+      experience: (
+        <div className="space-y-6 py-2">
+          <p className="text-cyan-400 font-black text-lg uppercase tracking-wider">Field Deployment Log</p>
+          <div className="space-y-4 border-l-2 border-cyan-500/30 pl-4">
+            {experiences.map((exp) => (
+              <div key={exp.id}>
+                <p className="text-orange-400 font-bold">{exp.role} — {exp.organization}</p>
+                <p className="text-slate-400 text-xs uppercase tracking-widest mt-1">{exp.period} · {exp.type}</p>
+                <p className="text-slate-300 mt-2 text-sm">{exp.focus}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-[11px] text-muted-foreground italic">Scroll to #experience on the site for full details.</p>
+        </div>
+      ),
+      certificates: (
+        <div className="space-y-4 py-2">
+          <p className="text-cyan-400 font-black text-lg uppercase tracking-wider">Verified Credentials</p>
+          <ul className="space-y-3 text-sm">
+            {Object.entries(certificateLinks).map(([slug, { label }]) => (
+              <li key={slug} className="flex flex-wrap items-baseline gap-x-2">
+                <span className="text-emerald-400 font-bold">{label}</span>
+                <button
+                  type="button"
+                  onClick={() => executeCommand(`certificates ${slug}`)}
+                  className="text-orange-400 font-bold hover:underline text-left"
+                >
+                  [open: certificates {slug}]
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[11px] text-muted-foreground italic">
+            Tip: type <span className="text-orange-400 font-bold">certificates ge</span> to open a Drive link, or visit #certificates on the site.
+          </p>
         </div>
       ),
       projects: (
@@ -270,6 +335,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
           <p><span className="text-cyan-400 font-bold">02. Solar Tracker</span> - IoT Dual-axis system</p>
           <p><span className="text-emerald-400 font-bold">03. Inventory Analyser</span> - Power BI Supply Chain dashboard</p>
           <p><span className="text-orange-400 font-bold">04. Knuckle Joint</span> - 3D Printed Industrial Part</p>
+          <p><span className="text-amber-400 font-bold">05. SC Analytics</span> - Excel supply chain KPI system</p>
         </div>
       ),
       contact: (
@@ -441,7 +507,7 @@ export function Terminal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
                 <TerminalIcon size={14} className="text-cyan-400" />
                 <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-muted-foreground/40 font-black hidden sm:inline">V8.1.0</span>
                 <span className="w-px h-3 bg-white/10 hidden sm:inline ml-1" />
-                <span className="text-[10px] uppercase tracking-widest font-mono text-white font-black bg-cyan-600 dark:bg-[#ff4d00] px-3 py-1 rounded shadow-lg shadow-black/20 line-clamp-1">Know More [Interactive]</span>
+                <span className="text-[10px] uppercase tracking-widest font-mono text-white font-black bg-cyan-600 dark:bg-[#ff4d00] px-3 py-1 rounded shadow-lg shadow-black/20 line-clamp-1">SID_OS [CMD-Terminal]</span>
               </div>
               <div className="flex items-center gap-3">
                 <button

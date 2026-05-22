@@ -91,6 +91,14 @@ export function Hero({
                                 Industrial Engineer<span className="text-cyan-600 dark:text-[#ff4d00]">.</span>
                             </motion.span>
                         </h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.65, duration: 0.7 }}
+                            className="font-label text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-black text-muted-foreground dark:text-[#e5e2e1]/50 max-w-xl leading-relaxed"
+                        >
+                            Supply Chain & Operations · Lean Systems · Forage Virtual Programs · Data-Driven Decision Making
+                        </motion.p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -99,14 +107,33 @@ export function Hero({
                                 Optimizing complex systems through <span className="text-foreground dark:text-white font-bold">industrial intelligence</span> and <span className="text-foreground dark:text-white font-bold">data-driven orchestration</span>.
                             </p>
 
-                            <div className="flex flex-wrap items-center gap-6">
+                            <div className="flex flex-wrap gap-2">
+                                {["2 Forage Sims", "6 Certifications", "B.E. IEM @ BMS", "Open to Roles"].map((chip) => (
+                                    <span
+                                        key={chip}
+                                        className="font-label text-[9px] uppercase tracking-widest font-black px-3 py-1.5 rounded-full bg-white dark:bg-[#1c1b1b] border border-black/5 dark:border-white/5 text-muted-foreground dark:text-[#e5e2e1]/50"
+                                    >
+                                        {chip}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-4">
                                 <motion.a
-                                    href="#projects"
+                                    href="#experience"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     className="group relative px-6 py-3 rounded-xl bg-black dark:bg-gradient-to-r dark:from-[#ff4d00] dark:to-[#ff8c00] text-white font-headline font-black text-base overflow-hidden flex items-center gap-2 shadow-xl shadow-orange-500/10"
                                 >
-                                    View Projects <ArrowRight size={18} />
+                                    View Experience <ArrowRight size={18} />
+                                </motion.a>
+                                <motion.a
+                                    href="#projects"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="px-5 py-3 rounded-xl border border-black/10 dark:border-white/10 font-headline font-black text-sm text-foreground dark:text-[#e5e2e1] hover:border-cyan-500/30 dark:hover:border-[#ff4d00]/40 transition-colors"
+                                >
+                                    Projects
                                 </motion.a>
 
                                 <a href="https://drive.google.com/file/d/1K17iyrLkLaXjdFCfwDWIo6WSJqlwJDae/view?usp=sharing" target="_blank" rel="noreferrer" className="group flex flex-col gap-1 text-cyan-700 dark:text-[#ff4d00] font-headline font-black text-sm">
@@ -185,9 +212,14 @@ export function Hero({
                                         <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-tight line-clamp-1">"Siddharth_K."</span>
                                     </div>
                                     <div className="flex items-center gap-2 group/line hover:bg-black/5 dark:hover:bg-white/5 p-1 -ml-1 rounded transition-colors">
-                                        <span className="text-cyan-600 dark:text-cyan-400 font-bold shrink-0">Access</span>
+                                        <span className="text-cyan-600 dark:text-cyan-400 font-bold shrink-0">Focus</span>
                                         <span className="text-black/20 dark:text-white/20">:</span>
-                                        <span className="text-amber-600 dark:text-amber-400 font-bold uppercase tracking-tight line-clamp-1">OPERATIONAL_MOD_v81</span>
+                                        <span className="text-amber-600 dark:text-amber-400 font-bold uppercase tracking-tight line-clamp-1">SCM · LEAN · OPS</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 group/line hover:bg-black/5 dark:hover:bg-white/5 p-1 -ml-1 rounded transition-colors">
+                                        <span className="text-orange-600 dark:text-orange-400 font-bold shrink-0">Certs</span>
+                                        <span className="text-black/20 dark:text-white/20">:</span>
+                                        <span className="text-slate-600 dark:text-slate-300 font-bold uppercase tracking-tight line-clamp-1">6_VERIFIED</span>
                                     </div>
 
                                     <div className="pt-4 mt-2 border-t border-black/5 dark:border-white/5">
